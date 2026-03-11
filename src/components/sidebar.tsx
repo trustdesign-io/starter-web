@@ -83,15 +83,17 @@ export function Sidebar({ user }: SidebarProps) {
 
       {/* Mobile sidebar */}
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="fixed left-4 top-4 z-40 md:hidden"
-            aria-label="Open navigation"
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+        <SheetTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              className="fixed left-4 top-4 z-40 md:hidden"
+              aria-label="Open navigation"
+            />
+          }
+        >
+          <Menu className="h-5 w-5" />
         </SheetTrigger>
         <SheetContent side="left" className="w-60 p-0">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
