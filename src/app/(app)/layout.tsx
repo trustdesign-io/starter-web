@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
 import { AuthProvider } from '@/components/auth-provider'
 import { Sidebar } from '@/components/sidebar'
+import type { User } from '@prisma/client'
 
 export default async function AppLayout({
   children,
@@ -18,14 +19,37 @@ export default async function AppLayout({
     redirect('/sign-in')
   }
 
-  let user
-  try {
-    user = await prisma.user.findUnique({ where: { id: authUser.id } })
-  } catch {
-    redirect('/sign-in')
+  const meta = authUser.user_metadata
+  const now = new Date()
+  const fallback: User = {
+    id: authUser.id,
+    email: authUser.email!,
+    name: meta?.full_name ?? null,
+    avatarUrl: meta?.avatar_url ?? null,
+    role: 'USER',
+    onboardingCompletedAt: null,
+    createdAt: now,
+    updatedAt: now,
   }
-  if (!user) {
-    redirect('/sign-in')
+
+  let user: User = fallback
+  try {
+    user = await prisma.user.upsert({
+      where: { id: authUser.id },
+      create: {
+        id: authUser.id,
+        email: authUser.email!,
+        name: meta?.full_name ?? null,
+        avatarUrl: meta?.avatar_url ?? null,
+      },
+      update: {
+        email: authUser.email!,
+        name: meta?.full_name ?? null,
+        avatarUrl: meta?.avatar_url ?? null,
+      },
+    })
+  } catch (err) {
+    console.error('[AppLayout] Failed to upsert user:', err)
   }
 
   return (
