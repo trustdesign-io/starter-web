@@ -34,7 +34,7 @@ export default function SignInPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Sign in</CardTitle>
+        <CardTitle role="heading" aria-level={1}>Sign in</CardTitle>
         <CardDescription>Enter your email and password to continue.</CardDescription>
       </CardHeader>
       <form action={formAction} aria-busy={isPending}>

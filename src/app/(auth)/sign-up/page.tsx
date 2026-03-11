@@ -34,7 +34,7 @@ export default function SignUpPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Create an account</CardTitle>
+        <CardTitle role="heading" aria-level={1}>Create an account</CardTitle>
         <CardDescription>Enter your details to get started.</CardDescription>
       </CardHeader>
       <form action={formAction} aria-busy={isPending}>
