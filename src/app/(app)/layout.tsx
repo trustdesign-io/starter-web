@@ -18,8 +18,12 @@ export default async function AppLayout({
     redirect('/sign-in')
   }
 
-  const user = await prisma.user.findUnique({ where: { id: authUser.id } })
-
+  let user
+  try {
+    user = await prisma.user.findUnique({ where: { id: authUser.id } })
+  } catch {
+    redirect('/sign-in')
+  }
   if (!user) {
     redirect('/sign-in')
   }
