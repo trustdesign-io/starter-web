@@ -1,5 +1,4 @@
 import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -13,21 +12,17 @@ export async function GET(request: NextRequest) {
   }
 
   if (code) {
-    // Use next/headers cookies() so Set-Cookie headers are automatically
-    // attached to the response — this is the reliable pattern for Route Handlers.
-    const cookieStore = await cookies()
+    const redirectTo = NextResponse.redirect(`${origin}/dashboard`)
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
+          getAll() { return request.cookies.getAll() },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              redirectTo.cookies.set(name, value, options)
             )
           },
         },
@@ -35,10 +30,7 @@ export async function GET(request: NextRequest) {
     )
 
     const { error } = await supabase.auth.exchangeCodeForSession(code)
-
-    if (!error) {
-      return NextResponse.redirect(`${origin}/dashboard`)
-    }
+    if (!error) return redirectTo
   }
 
   return NextResponse.redirect(`${origin}/sign-in?error=oauth`)
