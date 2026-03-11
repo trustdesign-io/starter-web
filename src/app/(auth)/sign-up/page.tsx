@@ -1,8 +1,8 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useState, useActionState } from 'react'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/client'
+import { signInWithGoogle } from '@/lib/supabase/google-oauth'
 import { signUpWithEmail } from '@/lib/actions/auth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,16 +21,15 @@ const initialState: ActionResult = { success: true }
 
 export default function SignUpPage() {
   const [state, formAction, isPending] = useActionState(signUpWithEmail, initialState)
+  const [oauthError, setOauthError] = useState<string | null>(null)
 
   async function handleGoogleSignIn() {
-    const supabase = createClient()
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
+    setOauthError(null)
+    const { error } = await signInWithGoogle()
+    if (error) setOauthError(error)
   }
+
+  const errorMessage = (!state.success && state.error) ? state.error : oauthError
 
   return (
     <Card className="w-full max-w-md">
@@ -38,11 +37,11 @@ export default function SignUpPage() {
         <CardTitle>Create an account</CardTitle>
         <CardDescription>Enter your details to get started.</CardDescription>
       </CardHeader>
-      <form action={formAction}>
+      <form action={formAction} aria-busy={isPending}>
         <CardContent className="flex flex-col gap-4">
-          {!state.success && state.error && (
+          {errorMessage && (
             <p className="text-sm text-destructive" role="alert">
-              {state.error}
+              {errorMessage}
             </p>
           )}
           <div className="flex flex-col gap-2">
