@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LayoutDashboard, Settings, Menu } from 'lucide-react'
@@ -19,7 +20,11 @@ const navItems = [
   // Add nav items here
 ] as const
 
-function NavLinks() {
+interface NavLinksProps {
+  onNavigate?: () => void
+}
+
+function NavLinks({ onNavigate }: NavLinksProps) {
   const pathname = usePathname()
 
   return (
@@ -28,6 +33,7 @@ function NavLinks() {
         <Link
           key={item.href}
           href={item.href}
+          onClick={onNavigate}
           className={cn(
             'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
             pathname === item.href
@@ -36,7 +42,7 @@ function NavLinks() {
           )}
           aria-current={pathname === item.href ? 'page' : undefined}
         >
-          <item.icon className="h-4 w-4 shrink-0" aria-hidden />
+          <item.icon className="h-4 w-4 shrink-0" aria-hidden={true} />
           {item.label}
         </Link>
       ))}
@@ -44,14 +50,19 @@ function NavLinks() {
   )
 }
 
-function SidebarContent({ user }: SidebarProps) {
+interface SidebarContentProps {
+  user: User
+  onNavigate?: () => void
+}
+
+function SidebarContent({ user, onNavigate }: SidebarContentProps) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-14 items-center border-b px-6">
         <span className="font-semibold">App Name</span>
       </div>
       <div className="flex-1 overflow-y-auto py-4">
-        <NavLinks />
+        <NavLinks onNavigate={onNavigate} />
       </div>
       <div className="border-t">
         <UserMenu user={user} />
@@ -61,6 +72,8 @@ function SidebarContent({ user }: SidebarProps) {
 }
 
 export function Sidebar({ user }: SidebarProps) {
+  const [open, setOpen] = useState(false)
+
   return (
     <>
       {/* Desktop sidebar */}
@@ -69,7 +82,7 @@ export function Sidebar({ user }: SidebarProps) {
       </aside>
 
       {/* Mobile sidebar */}
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
             variant="ghost"
@@ -82,7 +95,7 @@ export function Sidebar({ user }: SidebarProps) {
         </SheetTrigger>
         <SheetContent side="left" className="w-60 p-0">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
-          <SidebarContent user={user} />
+          <SidebarContent user={user} onNavigate={() => setOpen(false)} />
         </SheetContent>
       </Sheet>
     </>
