@@ -34,6 +34,7 @@ export default function SignUpPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
+        {/* CardTitle renders as div; role+aria-level needed for a11y and heading selectors */}
         <CardTitle role="heading" aria-level={1}>Create an account</CardTitle>
         <CardDescription>Enter your details to get started.</CardDescription>
       </CardHeader>

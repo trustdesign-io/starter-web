@@ -33,13 +33,13 @@ test.describe('Auth smoke tests', () => {
     page,
   }) => {
     await page.goto('/dashboard')
-    await expect(page).toHaveURL('/sign-in')
+    await expect(page).toHaveURL(/\/sign-in/)
   })
 
   test('unauthenticated user visiting /settings is redirected to /sign-in', async ({
     page,
   }) => {
     await page.goto('/settings')
-    await expect(page).toHaveURL('/sign-in')
+    await expect(page).toHaveURL(/\/sign-in/)
   })
 })

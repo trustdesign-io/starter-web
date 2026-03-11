@@ -34,6 +34,7 @@ export default function SignInPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
+        {/* CardTitle renders as div; role+aria-level needed for a11y and heading selectors */}
         <CardTitle role="heading" aria-level={1}>Sign in</CardTitle>
         <CardDescription>Enter your email and password to continue.</CardDescription>
       </CardHeader>
