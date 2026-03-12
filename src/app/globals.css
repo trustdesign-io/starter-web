@@ -18,6 +18,18 @@
   --color-cod-gray-800: #272727;
   --color-cod-gray-900: #1a1a1a;
   --color-cod-gray-950: #111111;
+
+  --color-powder-blue-50: #f1faf9;
+  --color-powder-blue-100: #dbf1f2;
+  --color-powder-blue-200: #b1e0e2;
+  --color-powder-blue-300: #8cd0d4;
+  --color-powder-blue-400: #56b3ba;
+  --color-powder-blue-500: #3b979f;
+  --color-powder-blue-600: #337b87;
+  --color-powder-blue-700: #2f656f;
+  --color-powder-blue-800: #2e545c;
+  --color-powder-blue-900: #2a474f;
+  --color-powder-blue-950: #172e35;
 }
 
 @theme inline {
