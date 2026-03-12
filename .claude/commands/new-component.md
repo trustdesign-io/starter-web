@@ -47,7 +47,7 @@ Use `cva` from `class-variance-authority` for components with multiple visual va
 - Test with Tab key navigation
 
 ### 5. Apply brand styles
-Refer to `docs/BRAND.md` for colours, typography, spacing, and border radius conventions.
+Refer to `design-system/[brand-name]/MASTER.md` for colours, typography, spacing, and border radius tokens. See `docs/BRAND_GUIDE.md` for UI component defaults and conventions.
 
 ### 6. Write tests
 - Add `[component-name].test.tsx` alongside the component

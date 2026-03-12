@@ -75,9 +75,9 @@ Use the **Heading Font** / **Body Font** from `design-system/<brand-name>/MASTER
 If the user explicitly provided a Google Font name that differs from MASTER.md,
 use their choice instead.
 
-## Step 5 — Update docs/BRAND.md
+## Step 5 — Update docs/BRAND_GUIDE.md
 
-Open `docs/BRAND.md` and update with the full brand summary:
+Open `docs/BRAND_GUIDE.md` and update with the full brand summary:
 
 - **Brand name** and personality description
 - **Color Tokens** section: document the palette name, primary hex, and usage notes from MASTER.md
@@ -88,7 +88,7 @@ Open `docs/BRAND.md` and update with the full brand summary:
 ## Step 6 — Commit
 
 ```
-git add src/app/globals.css src/app/layout.tsx docs/BRAND.md design-system/
+git add src/app/globals.css src/app/layout.tsx docs/BRAND_GUIDE.md design-system/
 git commit -m "brand: apply [brand name] brand tokens"
 ```
 

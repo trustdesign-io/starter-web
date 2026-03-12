@@ -1,6 +1,10 @@
-# Brand Guidelines
+# Brand Guide
 
-> This document is filled in during project kickoff and updated as the brand evolves. Claude uses this file when writing copy, generating UI, or making design decisions.
+> **Purpose:** This document explains the branding process, conventions, and UI defaults used in this project. It is a guide, not a token file.
+>
+> **The active brand design system for this project lives in `design-system/[brand-name]/MASTER.md`** — that file is the source of truth for colours, typography, spacing, and component specs for the current client brand. When applying or reading brand tokens, go there first.
+
+This guide is filled in during project kickoff and updated as the brand evolves. Claude uses this file when writing copy, generating UI, or making design decisions.
 
 ## Project Identity
 
@@ -69,7 +73,7 @@ for hover states and `powder-blue-700` for active/pressed states.
 To apply a new brand palette:
 1. Generate the palette at uicolors.app, export as Tailwind 4
 2. Paste the CSS variables into the `@theme` block in `src/app/globals.css`
-3. Update `docs/BRAND.md` with the palette name and usage notes
+3. Update `docs/BRAND_GUIDE.md` with the palette name and usage notes
 
 ### Typography
 

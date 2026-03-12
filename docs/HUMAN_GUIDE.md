@@ -150,8 +150,8 @@ user record in the database — no manual setup required.
    ```
 5. Type `/apply-brand` and follow the prompts — paste the CSS variables when asked
 
-Claude will update `globals.css`, `layout.tsx` (if a font was provided), and
-`docs/BRAND.md` automatically.
+Claude will update `globals.css`, `layout.tsx` (font from design system recommendation),
+`docs/BRAND_GUIDE.md`, and `design-system/[brand-name]/MASTER.md` automatically.
 
 ---
 

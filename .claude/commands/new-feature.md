@@ -40,7 +40,7 @@ Before writing any code, produce:
 ### 5. UI layer
 - Create components following `docs/CONVENTIONS.md`
 - Use shadcn/ui components as building blocks
-- Apply brand styles from `docs/BRAND.md`
+- Apply brand styles from `design-system/[brand-name]/MASTER.md` (see `docs/BRAND_GUIDE.md` for conventions)
 - Add loading states (skeleton) and error states
 
 ### 6. Tests
