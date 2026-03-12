@@ -1,3 +1,9 @@
+## First-time setup
+
+Before doing anything else in a new environment, read docs/SETUP.md in full.
+It contains all required steps for environment variables, database migrations,
+Google OAuth, and first login behaviour. Do not skip it.
+
 # [Project Name]
 
 > Replace everything in square brackets before using this template.
