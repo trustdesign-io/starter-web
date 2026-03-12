@@ -36,32 +36,36 @@
 
 ## Visual Identity
 
-### Colours
+### Color Tokens
 
-> Update these in `tailwind.config.ts` under `theme.extend.colors` to make them available as utilities.
+Palettes are generated at [uicolors.app](https://uicolors.app), exported in
+**Tailwind 4** format (CSS variables), and pasted into the `@theme` block in
+`src/app/globals.css`.
 
-| Token | Name | Hex | Usage |
-|-------|------|-----|-------|
-| `primary` | [Name] | `#XXXXXX` | CTAs, key actions, links |
-| `primary-foreground` | | `#XXXXXX` | Text on primary backgrounds |
-| `secondary` | [Name] | `#XXXXXX` | Secondary actions, accents |
-| `secondary-foreground` | | `#XXXXXX` | Text on secondary backgrounds |
-| `background` | | `#XXXXXX` | Page background |
-| `foreground` | | `#XXXXXX` | Default text |
-| `muted` | | `#XXXXXX` | Subdued backgrounds |
-| `muted-foreground` | | `#XXXXXX` | Subdued text, labels |
-| `destructive` | | `#XXXXXX` | Errors, delete actions |
-| `border` | | `#XXXXXX` | Borders, dividers |
+The default neutral palette is **cod-gray**, available as `cod-gray-50` through
+`cod-gray-950` utilities. When applying a client brand, add a named primary (and
+optionally secondary) palette alongside cod-gray. Do not remove cod-gray — it is
+used for neutral UI surfaces.
+
+To apply a new brand palette:
+1. Generate the palette at uicolors.app, export as Tailwind 4
+2. Paste the CSS variables into the `@theme` block in `src/app/globals.css`
+3. Update `docs/BRAND.md` with the palette name and usage notes
 
 ### Typography
 
-| Use | Font family | Weights | Fallback |
-|-----|------------|---------|---------|
-| Headings | [e.g., Inter] | 600, 700 | sans-serif |
-| Body | [e.g., Inter] | 400, 500 | sans-serif |
-| Monospace | [e.g., JetBrains Mono] | 400 | monospace |
+**Default font:** Inter, loaded via `next/font/google` in `src/app/layout.tsx`.
 
-> Load fonts via `next/font` in `src/app/layout.tsx`.
+The font is registered as a CSS variable `--font-inter` on the `<html>` element and
+mapped to the `font-sans` Tailwind utility via `@theme { --font-sans: var(--font-inter); }`
+in `src/app/globals.css`.
+
+To change the font for a project:
+1. Replace the `Inter` import in `src/app/layout.tsx` with the new Google Font
+2. Update the `variable` option to match the font name (e.g. `variable: '--font-montserrat'`)
+3. Update the `@theme` block in `globals.css`: `--font-sans: var(--font-montserrat);`
+
+> Current font: **Inter** (`--font-inter`)
 
 ### Type scale
 
