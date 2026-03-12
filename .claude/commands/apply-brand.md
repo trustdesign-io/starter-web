@@ -134,6 +134,51 @@ design decisions for this brand.
 
 ---
 
+## Step 2b — Derive component style decisions from BRAND.md
+
+Read the **Style name** and **Key Effects** from BRAND.md, then cross-reference
+the personality words provided as input. Apply the following decisions to
+`src/app/globals.css` `:root` — these update `--radius` and add a comment
+documenting the shadow intent.
+
+### Border radius
+
+Match the brand personality/style to a radius value:
+
+| Personality words / Style match | `--radius` | Rationale |
+|---|---|---|
+| `punk`, `edgy`, `brutal`, `sharp`, `grunge`, Cyberpunk UI | `2px` | Hard corners = attitude |
+| `tech`, `developer`, `terminal`, `data` | `4px` | Precise, not cold |
+| `modern`, `minimal`, `clean`, `professional`, `saas` | `6px` | Balanced default |
+| `friendly`, `playful`, `warm`, `approachable`, `lifestyle` | `10px` | Welcoming curves |
+| `soft`, `gentle`, `wellness`, `health` | `14px` | Fluid, non-threatening |
+
+Use the **first matching row** based on the personality words and Style name.
+Update `:root` in `globals.css`:
+
+```css
+:root {
+  --radius: 2px; /* punk/edgy — hard corners */
+}
+```
+
+### Shadow style
+
+Add a CSS comment in `:root` documenting the shadow strategy for this brand.
+Do NOT add new CSS variables — just ensure the comment is present so developers
+know which shadow pattern to apply in components:
+
+| Style match | Shadow comment to add |
+|---|---|
+| Cyberpunk, punk, neon, cyber | `/* shadows: neon glow — box-shadow: 0 0 12px var(--primary), 0 0 24px var(--primary) */` |
+| Professional, corporate, B2B, SaaS | `/* shadows: soft drop — box-shadow: 0 4px 12px rgb(0 0 0 / 0.08) */` |
+| Elegant, luxury, premium | `/* shadows: refined — box-shadow: 0 2px 8px rgb(0 0 0 / 0.12) */` |
+| Playful, friendly, consumer | `/* shadows: diffuse — box-shadow: 0 8px 24px rgb(0 0 0 / 0.10) */` |
+
+Add the comment on the line immediately after `--radius`.
+
+---
+
 ## Step 3 — Apply all tokens to globals.css
 
 Open `src/app/globals.css`.
@@ -227,9 +272,19 @@ it in the `@theme` block. Import both fonts in `layout.tsx`.
    ```
 
 2. **`src/app/globals.css`** — update `--font-sans` in both `@theme` and
-   `@theme inline`:
+   `@theme inline` using a **literal font-family string**, not a `var()` reference.
+   This is required for Storybook compatibility — `var(--font-*)` references are
+   Next.js runtime variables that do not exist outside the Next.js render context:
    ```css
+   /* ✅ Correct — works in Storybook and Next.js */
+   --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+   /* ❌ Wrong — breaks Storybook, var(--font-*) is a Next.js runtime variable */
    --font-sans: var(--font-plus-jakarta-sans);
+   ```
+   For `--font-heading` (if heading/body fonts differ), same rule applies:
+   ```css
+   --font-heading: 'Caveat', cursive;
    ```
 
 If the user explicitly names a font that differs from BRAND.md, use their choice.
