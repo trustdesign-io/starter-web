@@ -2,7 +2,7 @@
 
 > **Purpose:** This document explains the branding process, conventions, and UI defaults used in this project. It is a guide, not a token file.
 >
-> **The active brand design system for this project lives in `design-system/[brand-name]/MASTER.md`** — that file is the source of truth for colours, typography, spacing, and component specs for the current client brand. When applying or reading brand tokens, go there first.
+> **The active brand design system for this project lives in `design-system/raretee/MASTER.md`** — that file is the source of truth for colours, typography, spacing, and component specs for the current client brand. When applying or reading brand tokens, go there first.
 
 This guide is filled in during project kickoff and updated as the brand evolves. Claude uses this file when writing copy, generating UI, or making design decisions.
 
@@ -10,7 +10,41 @@ This guide is filled in during project kickoff and updated as the brand evolves.
 
 | | |
 |--|--|
-| **Project name** | [Name] |
+| **Brand name** | raretee |
+| **Industry** | Lifestyle / limited run punk t-shirts |
+| **Personality** | punk, rebellion, cyber |
+| **Palette relationship** | Complementary — magenta-purple (#df3ff6) paired with cyber green (#26db0a); accent in electric lime (#a8f524). Chosen by ui-ux-pro-max for Cyberpunk UI style. |
+| **Design system** | `design-system/raretee/MASTER.md` |
+| **UI style** | Cyberpunk UI — neon glow, glitch animations, scanlines, terminal fonts |
+
+## Colour Tokens
+
+### Active palette
+
+| Scale | Base (500) | CSS prefix | Usage |
+|-------|-----------|------------|-------|
+| primary | `#df3ff6` | `--color-raretee-primary-*` | Interactive elements, links, focus rings, primary CTAs |
+| secondary | `#26db0a` | `--color-raretee-secondary-*` | Secondary actions, badges, highlights |
+| accent | `#a8f524` | `--color-raretee-accent-*` | High-energy CTAs, hover states, neon pops |
+| success | `#16a34a` | `--color-raretee-success-*` | Success states, confirmations |
+| destructive | `#ef4444` | `--color-raretee-destructive-*` | Errors, delete actions, warnings |
+
+### shadcn semantic variable mapping
+
+| Variable | Value |
+|----------|-------|
+| `--primary` | `#df3ff6` (raretee-primary-500) |
+| `--primary-foreground` | `#fdf5ff` (raretee-primary-50) |
+| `--secondary` | `#26db0a` (raretee-secondary-500) |
+| `--secondary-foreground` | `#f4fdf3` (raretee-secondary-50) |
+| `--accent` | `#a8f524` (raretee-accent-500) |
+| `--accent-foreground` | `#fbfff4` (raretee-accent-50) |
+| `--destructive` | `#ef4444` (raretee-destructive-500) |
+| `--ring` | `#df3ff6` (raretee-primary-500) |
+
+> Current brand palette: **raretee** (see full 55-token scale in `src/app/globals.css`)
+
+| **Project name** | raretee |
 | **Tagline** | [One line] |
 | **Target audience** | [Who uses this] |
 | **Core value** | [What problem it solves] |
@@ -51,44 +85,43 @@ The default neutral palette is **cod-gray**, available as `cod-gray-50` through
 optionally secondary) palette alongside cod-gray. Do not remove cod-gray — it is
 used for neutral UI surfaces.
 
-#### Current brand palette: powder-blue
+#### Current brand palette: raretee (5-scale system)
 
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `powder-blue-50` | `#f1faf9` | Tinted backgrounds, hover states |
-| `powder-blue-100` | `#dbf1f2` | Subtle fills, badges |
-| `powder-blue-200` | `#b1e0e2` | Borders on light backgrounds |
-| `powder-blue-300` | `#8cd0d4` | Decorative, disabled states |
-| `powder-blue-400` | `#56b3ba` | Secondary interactive elements |
-| `powder-blue-500` | `#3b979f` | Primary brand colour |
-| `powder-blue-600` | `#337b87` | Primary hover / focus |
-| `powder-blue-700` | `#2f656f` | Dark interactive, icon fill |
-| `powder-blue-800` | `#2e545c` | Dark surfaces |
-| `powder-blue-900` | `#2a474f` | Very dark backgrounds |
-| `powder-blue-950` | `#172e35` | Deepest shade |
+The full 55-token palette lives in `src/app/globals.css`. Key tokens:
 
-Use `powder-blue-500` as the default primary action colour. Use `powder-blue-600`
-for hover states and `powder-blue-700` for active/pressed states.
+| Scale | 500 hex | Usage |
+|-------|---------|-------|
+| `raretee-primary` | `#df3ff6` | Primary CTAs, links, focus rings |
+| `raretee-secondary` | `#26db0a` | Secondary actions, badges, cyber-green highlights |
+| `raretee-accent` | `#a8f524` | High-energy hover states, neon pops |
+| `raretee-success` | `#16a34a` | Success / confirmation states |
+| `raretee-destructive` | `#ef4444` | Errors, delete actions |
 
-To apply a new brand palette:
-1. Generate the palette at uicolors.app, export as Tailwind 4
-2. Paste the CSS variables into the `@theme` block in `src/app/globals.css`
-3. Update `docs/BRAND_GUIDE.md` with the palette name and usage notes
+> Palette generated programmatically from primary `#df3ff6` using complementary hue rotation.
+> Run `/apply-brand` to regenerate or switch to a new brand.
 
 ### Typography
 
-**Default font:** Inter, loaded via `next/font/google` in `src/app/layout.tsx`.
+**Heading font:** Caveat (`--font-caveat`) — handwritten, personal, punk attitude.
+**Body font:** Quicksand (`--font-quicksand`) — friendly, rounded, readable.
+Both loaded via `next/font/google` in `src/app/layout.tsx`.
 
-The font is registered as a CSS variable `--font-inter` on the `<html>` element and
-mapped to the `font-sans` Tailwind utility via `@theme { --font-sans: var(--font-inter); }`
-in `src/app/globals.css`.
+| Variable | Font | Role |
+|----------|------|------|
+| `--font-heading` | Caveat | Headlines, hero text, display copy |
+| `--font-sans` | Quicksand | Body copy, UI labels, forms |
 
-To change the font for a project:
-1. Replace the `Inter` import in `src/app/layout.tsx` with the new Google Font
-2. Update the `variable` option to match the font name (e.g. `variable: '--font-montserrat'`)
-3. Update the `@theme` block in `globals.css`: `--font-sans: var(--font-montserrat);`
+**Google Fonts URL:**
+```
+https://fonts.google.com/share?selection.family=Caveat:wght@400;500;600;700|Quicksand:wght@300;400;500;600;700
+```
 
-> Current font: **Inter** (`--font-inter`)
+**CSS Import:**
+```css
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+```
+
+> Current fonts: **Caveat** (`--font-caveat` → `--font-heading`) + **Quicksand** (`--font-quicksand` → `--font-sans`)
 
 ### Type scale
 
