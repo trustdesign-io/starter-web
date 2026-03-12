@@ -125,57 +125,47 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py \
 This writes `design-system/<brand-name>/BRAND.md` — the source of truth for all
 design decisions for this brand.
 
-**After running:**
-- Note the recommended **Heading Font** and **Body Font** — used in Step 4.
-- If the palette relationship was `let ui-ux-pro-max decide`, check whether
-  BRAND.md suggests a specific colour strategy (e.g. "analogous warm tones").
-  Regenerate the secondary/accent hues using the matching relationship if it
-  differs from the complementary default used in Step 1.
+**After running**, read `design-system/<brand-name>/BRAND.md` and extract:
+- **Heading Font** and **Body Font** — used in Step 4
+- **Style name** and **Key Effects** — used in Step 2b
+- **Palette relationship hint** — if `let ui-ux-pro-max decide` was chosen,
+  check whether BRAND.md suggests a specific colour strategy; regenerate
+  secondary/accent hues using the matching relationship if it differs from
+  the complementary default used in Step 1
 
 ---
 
-## Step 2b — Derive component style decisions from BRAND.md
+## Step 2b — Apply style recommendations from BRAND.md
 
-Read the **Style name** and **Key Effects** from BRAND.md, then cross-reference
-the personality words provided as input. Apply the following decisions to
-`src/app/globals.css` `:root` — these update `--radius` and add a comment
-documenting the shadow intent.
+Read the **Style name** and **Key Effects** fields from
+`design-system/<brand-name>/BRAND.md` and apply whatever they specify directly
+to `src/app/globals.css`. Do not invent values — use only what BRAND.md outputs.
 
-### Border radius
+### What to look for and where to apply it
 
-Match the brand personality/style to a radius value:
+**Border radius** — if Key Effects or Style mentions corner sharpness
+(e.g. "sharp corners", "no border radius", "pill buttons", "rounded cards"):
+- Update `--radius` in `:root` to match
+- Add a short inline comment referencing the style (e.g. `/* Cyberpunk UI */`)
+- If BRAND.md says nothing about corners, leave `--radius` at its current value
 
-| Personality words / Style match | `--radius` | Rationale |
-|---|---|---|
-| `punk`, `edgy`, `brutal`, `sharp`, `grunge`, Cyberpunk UI | `2px` | Hard corners = attitude |
-| `tech`, `developer`, `terminal`, `data` | `4px` | Precise, not cold |
-| `modern`, `minimal`, `clean`, `professional`, `saas` | `6px` | Balanced default |
-| `friendly`, `playful`, `warm`, `approachable`, `lifestyle` | `10px` | Welcoming curves |
-| `soft`, `gentle`, `wellness`, `health` | `14px` | Fluid, non-threatening |
+**Shadow style** — if Key Effects specifies a shadow or glow pattern
+(e.g. "neon glow (text-shadow)", "soft drop shadows", "no shadows"):
+- Add a CSS comment on the line after `--radius` documenting the pattern,
+  so developers have a ready-made value to paste into components
+- Format: `/* shadows: <effect> — box-shadow: <value> */`
+- If BRAND.md says nothing about shadows, omit the comment
 
-Use the **first matching row** based on the personality words and Style name.
-Update `:root` in `globals.css`:
+**Any other CSS-mappable recommendation** from Key Effects — apply the same
+principle: if it maps to a CSS variable or token in `:root`, apply it; if it
+does not map cleanly, add a comment noting the intent and skip the variable
+change.
 
-```css
-:root {
-  --radius: 2px; /* punk/edgy — hard corners */
-}
-```
+### What NOT to do
 
-### Shadow style
-
-Add a CSS comment in `:root` documenting the shadow strategy for this brand.
-Do NOT add new CSS variables — just ensure the comment is present so developers
-know which shadow pattern to apply in components:
-
-| Style match | Shadow comment to add |
-|---|---|
-| Cyberpunk, punk, neon, cyber | `/* shadows: neon glow — box-shadow: 0 0 12px var(--primary), 0 0 24px var(--primary) */` |
-| Professional, corporate, B2B, SaaS | `/* shadows: soft drop — box-shadow: 0 4px 12px rgb(0 0 0 / 0.08) */` |
-| Elegant, luxury, premium | `/* shadows: refined — box-shadow: 0 2px 8px rgb(0 0 0 / 0.12) */` |
-| Playful, friendly, consumer | `/* shadows: diffuse — box-shadow: 0 8px 24px rgb(0 0 0 / 0.10) */` |
-
-Add the comment on the line immediately after `--radius`.
+- Do not guess values from personality words
+- Do not apply defaults "because it seems right for this style"
+- Do not add tokens that BRAND.md did not mention
 
 ---
 
