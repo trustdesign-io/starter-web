@@ -178,10 +178,15 @@ Open `src/app/globals.css`.
 Locate the `@theme` block. Replace any previous brand palette (all non-`cod-gray`
 colour tokens) with the new five scales. Keep `--color-cod-gray-*` intact.
 
+**IMPORTANT: Always use a literal font-family string for `--font-sans`, not a `var()` reference.**
+This is required for Storybook compatibility — `var(--font-*)` references are Next.js runtime
+variables that do not exist outside the Next.js render context.
+
 ```css
 @theme {
-  /* fonts — unchanged */
-  --font-sans: var(--font-[brand]);
+  /* fonts — use literal font-family strings for Storybook compatibility */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Caveat', cursive;
 
   /* neutral — unchanged */
   --color-cod-gray-50: ...;
@@ -262,9 +267,11 @@ it in the `@theme` block. Import both fonts in `layout.tsx`.
    ```
 
 2. **`src/app/globals.css`** — update `--font-sans` in both `@theme` and
-   `@theme inline` using a **literal font-family string**, not a `var()` reference.
+   `@theme inline` blocks using a **literal font-family string**, not a `var()` reference.
    This is required for Storybook compatibility — `var(--font-*)` references are
-   Next.js runtime variables that do not exist outside the Next.js render context:
+   Next.js runtime variables that do not exist outside the Next.js render context.
+
+   Always write the literal font family value (e.g. quoted font name with fallback):
    ```css
    /* ✅ Correct — works in Storybook and Next.js */
    --font-sans: 'Plus Jakarta Sans', sans-serif;
@@ -272,10 +279,13 @@ it in the `@theme` block. Import both fonts in `layout.tsx`.
    /* ❌ Wrong — breaks Storybook, var(--font-*) is a Next.js runtime variable */
    --font-sans: var(--font-plus-jakarta-sans);
    ```
-   For `--font-heading` (if heading/body fonts differ), same rule applies:
+
+   For `--font-heading` (if heading/body fonts differ), apply the same rule:
    ```css
    --font-heading: 'Caveat', cursive;
    ```
+
+   Do not use `var()` references in either `@theme` or `@theme inline` blocks for fonts.
 
 If the user explicitly names a font that differs from BRAND.md, use their choice.
 
