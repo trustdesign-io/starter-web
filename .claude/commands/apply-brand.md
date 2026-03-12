@@ -1,65 +1,111 @@
-Apply a client brand to the project end-to-end: colour scale generation,
-design system, token application, typography, and documentation.
+Apply a client brand to the project end-to-end: full multi-palette colour system
+generation, design system, token application, typography, and documentation.
 
 ---
 
 ## INPUTS — Gather before touching any files
 
-Ask the user for all four before proceeding. Do not proceed until all are provided.
+Ask the user for all five before proceeding.
 
 | # | Input | Example |
 |---|-------|---------|
-| 1 | **Brand name** (lowercase, no spaces — used as palette name and folder name) | `acme` |
+| 1 | **Brand name** (lowercase, no spaces — used as palette prefix and folder name) | `acme` |
 | 2 | **Primary hex colour** | `#2563eb` |
 | 3 | **Industry / product type** | `B2B SaaS`, `fintech`, `healthcare` |
 | 4 | **3 words describing the brand personality** | `trustworthy, modern, minimal` |
+| 5 | **Palette relationship** | `complementary` / `analogous` / `triadic` / `split-complementary` / `let ui-ux-pro-max decide` (default) |
+
+Do not proceed until all five are provided. If the user omits item 5, default to
+`let ui-ux-pro-max decide` and pick the secondary/accent hues based on the
+ui-ux-pro-max output in Step 2.
 
 ---
 
-## Step 1 — Generate the colour scale
+## Step 1 — Generate the full colour system
 
-Derive a full 11-shade Tailwind 4 scale from the primary hex programmatically.
-Do not ask the user to provide shades — compute them using this algorithm:
+Derive five complete 11-shade scales (50–950) programmatically. Do not ask the
+user to supply any hex values other than the primary.
 
-- **500** = the exact primary hex provided
-- **Shades 50–400** — progressively mix toward white using these blend percentages:
+### 1a — Shade generation algorithm
 
-  | Shade | White mix |
-  |-------|-----------|
-  | 50    | 95%       |
-  | 100   | 90%       |
-  | 200   | 75%       |
-  | 300   | 60%       |
-  | 400   | 40%       |
+For each scale, given a base hex at shade 500:
 
-- **Shades 600–950** — progressively mix toward black:
+**Lighter shades (50–400) — mix toward white:**
 
-  | Shade | Black mix |
-  |-------|-----------|
-  | 600   | 15%       |
-  | 700   | 30%       |
-  | 800   | 45%       |
-  | 900   | 60%       |
-  | 950   | 75%       |
+| Shade | White mix |
+|-------|-----------|
+| 50    | 95%       |
+| 100   | 90%       |
+| 200   | 75%       |
+| 300   | 60%       |
+| 400   | 40%       |
 
-To blend: for each channel R, G, B —
-- Mix toward white: `result = round(channel + (255 - channel) * white_pct)`
-- Mix toward black: `result = round(channel * (1 - black_pct))`
+**Darker shades (600–950) — mix toward black:**
 
-Output the scale as Tailwind 4 CSS variables named after the brand:
+| Shade | Black mix |
+|-------|-----------|
+| 600   | 15%       |
+| 700   | 30%       |
+| 800   | 45%       |
+| 900   | 60%       |
+| 950   | 75%       |
+
+Per-channel formula (R, G, B independently):
+- Toward white: `result = round(channel + (255 - channel) * white_pct)`
+- Toward black: `result = round(channel * (1 - black_pct))`
+
+### 1b — Derive the five base hues
+
+Convert the primary hex to HSL to derive companion hues, then convert each back
+to hex before applying the shade algorithm above.
+
+**Primary (500 = provided hex):** Use as-is.
+
+**Secondary** — derive from primary HSL using the chosen relationship:
+
+| Relationship | Secondary hue offset | Accent hue offset |
+|---|---|---|
+| `complementary` | +180° | +150° (split of complement) |
+| `analogous` | +30° | +60° |
+| `triadic` | +120° | +240° |
+| `split-complementary` | +150° | +210° |
+| `let ui-ux-pro-max decide` | Use complementary (+180°) as default; override after Step 2 if BRAND.md suggests a different palette | Same as complementary accent |
+
+Hue rotation: `new_hue = (primary_hue + offset) % 360`
+
+For secondary and accent, keep the same saturation as primary. Adjust lightness
+to 45% for secondary (professional, slightly muted) and 55% for accent
+(vivid, CTA-ready).
+
+**Success** — fixed green family regardless of relationship:
+Base hex: derive from HSL `(142, 71%, 45%)` → approximately `#16a34a`
+
+**Destructive** — fixed red family:
+Base hex: derive from HSL `(0, 84%, 60%)` → approximately `#ef4444`
+
+### 1c — CSS variable naming
+
+Name every token `--color-[brand]-[scale]-[shade]`:
 
 ```css
---color-acme-50:  #f0f5ff;
---color-acme-100: #dce8fe;
---color-acme-200: #b3ccfd;
---color-acme-300: #89b0fb;
---color-acme-400: #5488f9;
---color-acme-500: #2563eb;  /* primary */
---color-acme-600: #1f53c7;
---color-acme-700: #1a42a4;
---color-acme-800: #143280;
---color-acme-900: #0e225c;
---color-acme-950: #081438;
+--color-acme-primary-50:      #eef2ff;
+--color-acme-primary-100:     #e0e7ff;
+/* ... */
+--color-acme-primary-500:     #2563eb;  /* base */
+/* ... */
+--color-acme-primary-950:     #0a1640;
+
+--color-acme-secondary-50:    ...;
+/* ... through 950 */
+
+--color-acme-accent-50:       ...;
+/* ... through 950 */
+
+--color-acme-success-50:      ...;
+/* ... through 950 */
+
+--color-acme-destructive-50:  ...;
+/* ... through 950 */
 ```
 
 ---
@@ -76,55 +122,75 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py \
   -f markdown
 ```
 
-This writes `design-system/<brand-name>/BRAND.md` — the source of truth for
-all design decisions for this brand.
+This writes `design-system/<brand-name>/BRAND.md` — the source of truth for all
+design decisions for this brand.
 
-**After running:** note the recommended **Heading Font** and **Body Font** from
-the output. You will use these in Step 4. If both heading and body are the same
-font, use it for `--font-sans`. If they differ, use the body font for
-`--font-sans` and apply the heading font via a separate `--font-heading` variable.
+**After running:**
+- Note the recommended **Heading Font** and **Body Font** — used in Step 4.
+- If the palette relationship was `let ui-ux-pro-max decide`, check whether
+  BRAND.md suggests a specific colour strategy (e.g. "analogous warm tones").
+  Regenerate the secondary/accent hues using the matching relationship if it
+  differs from the complementary default used in Step 1.
 
 ---
 
-## Step 3 — Apply colour tokens to globals.css
+## Step 3 — Apply all tokens to globals.css
 
 Open `src/app/globals.css`.
 
-### 3a — Add scale to `@theme`
+### 3a — Add all five scales to `@theme`
 
-Locate the `@theme` block. After the `--font-sans` line, add the generated
-colour scale. Replace any previous brand palette (all non-`cod-gray` colour
-tokens) with the new scale. Keep `--color-cod-gray-*` intact — it is the
-neutral surface palette.
+Locate the `@theme` block. Replace any previous brand palette (all non-`cod-gray`
+colour tokens) with the new five scales. Keep `--color-cod-gray-*` intact.
 
 ```css
 @theme {
-  /* ... existing font and cod-gray tokens ... */
+  /* fonts — unchanged */
+  --font-sans: var(--font-[brand]);
 
-  /* [Brand name] palette */
-  --color-acme-50:  #f0f5ff;
-  --color-acme-100: #dce8fe;
-  /* ... all 11 shades ... */
-  --color-acme-950: #081438;
+  /* neutral — unchanged */
+  --color-cod-gray-50: ...;
+  /* ... */
+
+  /* [Brand name] colour system */
+  --color-acme-primary-50:     #eef2ff;
+  /* ... all 11 primary shades ... */
+  --color-acme-primary-950:    #0a1640;
+
+  --color-acme-secondary-50:   ...;
+  /* ... all 11 secondary shades ... */
+
+  --color-acme-accent-50:      ...;
+  /* ... all 11 accent shades ... */
+
+  --color-acme-success-50:     ...;
+  /* ... all 11 success shades ... */
+
+  --color-acme-destructive-50: ...;
+  /* ... all 11 destructive shades ... */
 }
 ```
 
 ### 3b — Map to shadcn semantic variables in `:root`
 
-Update the `:root` block to map the brand palette to shadcn/ui semantic
-variables using the computed hex values (not Tailwind utility class names):
+Update the `:root` block using computed hex values (not Tailwind utility names):
 
 ```css
 :root {
-  --primary:            <acme-500-hex>;
-  --primary-foreground: <acme-50-hex>;
-  --ring:               <acme-500-hex>;
+  --primary:                <acme-primary-500-hex>;
+  --primary-foreground:     <acme-primary-50-hex>;
+  --secondary:              <acme-secondary-500-hex>;
+  --secondary-foreground:   <acme-secondary-50-hex>;
+  --accent:                 <acme-accent-500-hex>;
+  --accent-foreground:      <acme-accent-50-hex>;
+  --destructive:            <acme-destructive-500-hex>;
+  --ring:                   <acme-primary-500-hex>;
 }
 ```
 
-Leave all other semantic variables (`--secondary`, `--muted`, `--accent`,
-`--destructive`, `--border`, `--background`, `--foreground`, etc.) unchanged.
-Do not update the `.dark` block unless the user explicitly requests it.
+Leave `--background`, `--foreground`, `--muted`, `--border`, `--card`, and all
+other semantic variables unchanged. Do not update `.dark` unless the user
+explicitly requests it.
 
 ---
 
@@ -134,13 +200,20 @@ Read `design-system/<brand-name>/BRAND.md` for the typography recommendation.
 
 ### Font name → Next.js import name
 
-Convert the font name to its Next.js `next/font/google` export name:
-- Remove spaces, capitalise each word: `"Plus Jakarta Sans"` → `Plus_Jakarta_Sans`
-- The CSS variable should be kebab-case: `--font-plus-jakarta-sans`
+Convert the font name to its `next/font/google` named export:
+- Remove spaces, join with underscore, capitalise each word:
+  `"Plus Jakarta Sans"` → `Plus_Jakarta_Sans`
+- CSS variable: kebab-case with `--font-` prefix:
+  `--font-plus-jakarta-sans`
+
+### If heading and body fonts differ
+
+Use the body font for `--font-sans`. Add a `--font-heading` variable and apply
+it in the `@theme` block. Import both fonts in `layout.tsx`.
 
 ### Updates required
 
-1. **`src/app/layout.tsx`** — replace the existing font import:
+1. **`src/app/layout.tsx`**
    ```ts
    import { Plus_Jakarta_Sans } from 'next/font/google'
    const plusJakartaSans = Plus_Jakarta_Sans({
@@ -148,7 +221,7 @@ Convert the font name to its Next.js `next/font/google` export name:
      variable: '--font-plus-jakarta-sans',
    })
    ```
-   Update the `<html>` className to use the new variable:
+   Update `<html>` className:
    ```tsx
    <html lang="en" className={plusJakartaSans.variable}>
    ```
@@ -159,28 +232,26 @@ Convert the font name to its Next.js `next/font/google` export name:
    --font-sans: var(--font-plus-jakarta-sans);
    ```
 
-If the user explicitly names a different font, use their choice over BRAND.md.
+If the user explicitly names a font that differs from BRAND.md, use their choice.
 
 ---
 
 ## Step 5 — Update docs/BRAND_GUIDE.md
 
-Open `docs/BRAND_GUIDE.md` and update the following sections with the brand
-details. Replace existing values rather than appending.
+Open `docs/BRAND_GUIDE.md` and update (replace existing values, do not append):
 
 - **Project Identity** — brand name and personality words
-- **Color Tokens** — palette name, primary hex, shade table (50–950 with hex
-  and suggested usage), and the mapping to shadcn semantic variables
-- **Typography** — font name, CSS variable, Google Fonts import URL from
-  BRAND.md, and the `@theme` mapping
-- **Design System** — path to `design-system/<brand-name>/BRAND.md` as the
-  source of truth, UI style name, and key effects from BRAND.md
+- **Palette Relationship** — which relationship was used and why
+- **Color Tokens** — for each of the five scales: scale name, base-500 hex,
+  and intended usage (e.g. "primary: interactive elements, links, focus rings")
+- **Typography** — font name(s), CSS variable(s), Google Fonts import URL from
+  BRAND.md, `@theme` mapping
+- **Design System** — path to `design-system/<brand-name>/BRAND.md` as source
+  of truth, UI style name and key effects from BRAND.md
 
 ---
 
 ## Step 6 — Commit
-
-Stage and commit all changed files:
 
 ```bash
 git add \
