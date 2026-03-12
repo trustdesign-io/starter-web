@@ -155,7 +155,21 @@ Claude will update `globals.css`, `layout.tsx` (if a font was provided), and
 
 ---
 
-## 9. Hand to Claude Code for development
+## 9. Running Storybook
+
+Storybook shows all UI components rendered with the current brand tokens.
+
+```bash
+npm run storybook
+```
+
+Then open [http://localhost:6006](http://localhost:6006). You'll see every shadcn/ui component organised in the sidebar, plus a Tokens page showing the full colour and typography scale.
+
+After running `/apply-brand`, restart Storybook to see the new brand colours applied across all components.
+
+---
+
+## 10. Hand to Claude Code for development
 
 1. Open Claude Code in the project folder:
    ```bash
