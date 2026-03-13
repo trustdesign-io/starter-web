@@ -33,12 +33,16 @@ cp .env.example .env.local
 
 Fill in the values in `.env.local`. See `docs/SETUP.md` for full instructions on Supabase, Google OAuth, and first-login behaviour.
 
-### 3. Run database migrations and generate the Prisma client
+### 3. Push the schema and generate the Prisma client
+
+For initial setup, push the schema directly (no migration file generated):
 
 ```bash
-npx prisma migrate dev
+npx prisma db push
 npx prisma generate
 ```
+
+For subsequent schema changes, use `npx prisma migrate dev` to create a migration file.
 
 ### 4. Start the dev server
 
@@ -89,7 +93,7 @@ prisma/
 | `DIRECT_URL` | Supabase direct connection (used by Prisma for migrations) |
 | `NEXT_PUBLIC_SITE_URL` | Public base URL of the app (e.g. `http://localhost:3000`) |
 
-> Use the direct connection string (`db.[ref].supabase.co:5432`) for both `DATABASE_URL` and `DIRECT_URL` — not the pooler. See `docs/SETUP.md` for details.
+> Both `DATABASE_URL` and `DIRECT_URL` must use the **direct** connection format (`db.[PROJECT-REF].supabase.co:5432`) — not the pooler. See `docs/SETUP.md` for details.
 
 ## Documentation
 
