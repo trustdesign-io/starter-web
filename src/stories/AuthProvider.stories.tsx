@@ -1,7 +1,20 @@
+import { vi, fn } from '@storybook/test'
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 
 import { AuthProvider } from '@/components/auth-provider'
 import type { User } from '@/types'
+
+// Mock the Supabase client so these stories work in CI without real credentials.
+// AuthProvider only uses onAuthStateChange — we return a no-op subscription.
+vi.mock('@/lib/supabase/client', () => ({
+  createClient: () => ({
+    auth: {
+      onAuthStateChange: fn().mockReturnValue({
+        data: { subscription: { unsubscribe: fn() } },
+      }),
+    },
+  }),
+}))
 
 /**
  * `AuthProvider` is a non-visual context provider.
