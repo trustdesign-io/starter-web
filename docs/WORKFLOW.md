@@ -91,9 +91,9 @@ Human                          Claude Code
 ## Branch and commit conventions
 
 **Branches** are named by category:
-- Feature / Docs / Chore / Research → `feature/{number}-{slug}`
+- Feature / Docs / Research → `feature/{number}-{slug}`
 - Bug → `fix/{number}-{slug}`
-- Design → `design/{number}-{slug}`
+- Chore → `chore/{number}-{slug}`
 
 **Commits** follow [Conventional Commits](https://www.conventionalcommits.org/):
 ```
@@ -115,7 +115,7 @@ PRs always target `main`. Never push directly to `main`.
 Every PR (and every push to `main` or `staging`) runs `.github/workflows/ci.yml`, which gates merge on:
 
 1. `npm ci` — install dependencies
-2. `npx playwright install --with-deps chromium` — install E2E browser
+2. `npx playwright install --with-deps chromium` — install E2E browser (E2E tests are not yet wired into CI)
 3. `npx prisma generate` — generate Prisma client
 4. `npm run lint`
 5. `npm run type-check`
