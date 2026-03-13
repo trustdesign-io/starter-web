@@ -70,7 +70,7 @@ Process: ask context questions → present 2–3 alternatives with trade-offs �
 
 | Skill | Purpose |
 |-------|---------|
-| `bencium-impact-designer` | Production-grade interfaces; described as based on Anthropic's Frontend Designer skill |
+| `bencium-impact-designer` | Production-grade interfaces; described as based on Anthropic's Frontend Designer skill (unverified) |
 | `design-audit` | Visual-only UX audits with phased implementation plans; does not touch code |
 | `typography` | Enforces professional typography rules (correct quotes, dashes, hierarchy) in generated HTML/CSS/React |
 | `bencium-code-conventions` | React/Next.js/TypeScript/Tailwind/Supabase conventions — overlaps with this project's `CLAUDE.md` |
@@ -79,7 +79,7 @@ Process: ask context questions → present 2–3 alternatives with trade-offs �
 
 ## Installation
 
-Via Claude Code CLI:
+Via Claude Code CLI (verify against current CLI docs — plugin API may have changed):
 ```
 /plugin marketplace add bencium/bencium-marketplace
 /plugin install bencium-controlled-ux-designer@bencium-marketplace
@@ -95,7 +95,7 @@ Manual (project-level): copy the skill's `skills/` directory into `.claude/skill
 2. **Reference files do not auto-load.** `ACCESSIBILITY.md`, `MOTION-SPEC.md`, and `RESPONSIVE-DESIGN.md` use progressive disclosure — they must be explicitly requested.
 3. **No palette or font database.** Provides principles and anti-patterns but no enumerated library to select from.
 4. **No chart support.** Neither design skill addresses data visualisation.
-5. **Context window cost.** The controlled variant's full reference suite totals ~70KB. Meaningful token cost if all files load in one session.
+5. **Context window cost.** The controlled variant's full reference suite is approximately ~70KB (based on file size sums — actual token cost will vary). Meaningful overhead if all reference files load in a single session; reference files are on-demand, so everyday sessions need not pay this cost.
 6. **Third-party, no Anthropic affiliation.** Community skills — maintenance depends on a single author.
 
 ---
