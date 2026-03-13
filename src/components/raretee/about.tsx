@@ -9,8 +9,7 @@ export function RareteeAbout() {
               The manifesto
             </p>
             <h2
-              className="text-[clamp(3rem,8vw,6rem)] leading-none uppercase text-foreground"
-              style={{ fontFamily: 'var(--font-bebas-neue)' }}
+              className="font-heading text-[clamp(3rem,8vw,6rem)] leading-none uppercase text-foreground"
             >
               Not a brand.
               <br />
@@ -43,10 +42,7 @@ export function RareteeAbout() {
                 { value: '0', label: 'Restocks' },
               ].map(({ value, label }) => (
                 <div key={label} className="bg-background p-6 flex flex-col gap-1">
-                  <span
-                    className="text-4xl leading-none text-primary"
-                    style={{ fontFamily: 'var(--font-bebas-neue)' }}
-                  >
+                  <span className="font-heading text-4xl leading-none text-primary">
                     {value}
                   </span>
                   <span className="text-xs tracking-widest uppercase text-muted-foreground font-sans">

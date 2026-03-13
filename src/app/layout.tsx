@@ -6,8 +6,8 @@ const bebasNeue = Bebas_Neue({ weight: '400', subsets: ['latin'], variable: '--f
 const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space-mono' })
 
 export const metadata: Metadata = {
-  title: 'Raretee',
-  description: 'Limited-run t-shirts. Rebellious by design.',
+  title: 'trustdesign starter',
+  description: 'Next.js starter template by trustdesign.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

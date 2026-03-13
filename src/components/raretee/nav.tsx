@@ -1,10 +1,7 @@
 export function RareteeNav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-background border-b border-border">
-      <span
-        className="text-2xl tracking-widest text-foreground uppercase"
-        style={{ fontFamily: 'var(--font-bebas-neue)' }}
-      >
+    <nav aria-label="Main navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-background border-b border-border">
+      <span className="font-heading text-2xl tracking-widest text-foreground uppercase">
         Raretee
       </span>
       <div className="flex items-center gap-8 text-xs tracking-widest uppercase text-muted-foreground">

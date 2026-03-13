@@ -9,8 +9,7 @@ export function RareteeHero() {
 
         {/* Headline */}
         <h1
-          className="text-[clamp(5rem,18vw,16rem)] leading-none uppercase text-foreground"
-          style={{ fontFamily: 'var(--font-bebas-neue)' }}
+          className="font-heading text-[clamp(5rem,18vw,16rem)] leading-none uppercase text-foreground"
         >
           Wear{' '}
           <span className="text-primary">

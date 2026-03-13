@@ -5,52 +5,20 @@ import { RareteeHero } from '@/components/raretee/hero'
 import { RareteeProductGrid } from '@/components/raretee/product-grid'
 import { RareteeAbout } from '@/components/raretee/about'
 
-// ─── Nav ─────────────────────────────────────────────────────────────────────
-
-const navMeta: Meta<typeof RareteeNav> = {
-  title: 'Raretee/Nav',
-  component: RareteeNav,
+// Storybook requires a single default export. We use the FullPage composite as
+// the primary entry and export individual component stories from it.
+const meta: Meta = {
+  title: 'Raretee/FullPage',
   parameters: {
     layout: 'fullscreen',
   },
 }
 
-export default navMeta
+export default meta
 
-type NavStory = StoryObj<typeof RareteeNav>
+type Story = StoryObj
 
-export const Navigation: NavStory = {}
-
-// ─── Hero ─────────────────────────────────────────────────────────────────────
-
-export const Hero: StoryObj = {
-  render: () => <RareteeHero />,
-  parameters: {
-    layout: 'fullscreen',
-  },
-}
-
-// ─── Product Grid ─────────────────────────────────────────────────────────────
-
-export const ProductGrid: StoryObj = {
-  render: () => <RareteeProductGrid />,
-  parameters: {
-    layout: 'fullscreen',
-  },
-}
-
-// ─── About ───────────────────────────────────────────────────────────────────
-
-export const About: StoryObj = {
-  render: () => <RareteeAbout />,
-  parameters: {
-    layout: 'fullscreen',
-  },
-}
-
-// ─── Full Page ────────────────────────────────────────────────────────────────
-
-export const FullPage: StoryObj = {
+export const FullPage: Story = {
   render: () => (
     <>
       <RareteeNav />
@@ -61,7 +29,20 @@ export const FullPage: StoryObj = {
       </main>
     </>
   ),
-  parameters: {
-    layout: 'fullscreen',
-  },
+}
+
+export const Nav: Story = {
+  render: () => <RareteeNav />,
+}
+
+export const Hero: Story = {
+  render: () => <RareteeHero />,
+}
+
+export const ProductGrid: Story = {
+  render: () => <RareteeProductGrid />,
+}
+
+export const About: Story = {
+  render: () => <RareteeAbout />,
 }

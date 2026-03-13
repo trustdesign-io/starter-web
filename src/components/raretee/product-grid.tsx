@@ -16,6 +16,8 @@ const PRODUCTS: Product[] = [
   { id: '001-F', name: 'BLACKOUT', edition: 'Drop 001 — F', price: 75, remaining: 1, sold: false },
 ]
 
+const totalRemaining = PRODUCTS.filter((p) => !p.sold).reduce((sum, p) => sum + p.remaining, 0)
+
 function ProductCard({ product }: { product: Product }) {
   return (
     <article
@@ -25,8 +27,7 @@ function ProductCard({ product }: { product: Product }) {
       {/* Image placeholder */}
       <div className="aspect-square bg-secondary flex items-center justify-center relative overflow-hidden">
         <span
-          className="text-5xl text-muted-foreground/20 select-none"
-          style={{ fontFamily: 'var(--font-bebas-neue)' }}
+          className="font-heading text-5xl text-muted-foreground/20 select-none"
           aria-hidden
         >
           {product.name[0]}
@@ -50,10 +51,7 @@ function ProductCard({ product }: { product: Product }) {
       {/* Info */}
       <div className="p-4 flex flex-col gap-2 border-t border-border">
         <div className="flex items-start justify-between gap-2">
-          <h3
-            className="text-2xl leading-none uppercase text-foreground"
-            style={{ fontFamily: 'var(--font-bebas-neue)' }}
-          >
+          <h3 className="font-heading text-2xl leading-none uppercase text-foreground">
             {product.name}
           </h3>
           <span className="text-sm text-foreground font-sans font-bold tabular-nums">
@@ -64,8 +62,9 @@ function ProductCard({ product }: { product: Product }) {
           {product.edition}
         </p>
         <button
+          type="button"
           disabled={product.sold}
-          className="mt-2 w-full bg-primary text-primary-foreground text-xs tracking-widest uppercase py-2.5 font-sans font-bold hover:bg-primary/90 disabled:bg-border disabled:text-muted-foreground disabled:cursor-not-allowed transition-colors"
+          className="mt-2 w-full bg-primary text-primary-foreground text-xs tracking-widest uppercase py-2.5 font-sans font-bold hover:bg-primary/90 disabled:bg-border disabled:text-muted-foreground disabled:cursor-not-allowed transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
         >
           {product.sold ? 'Sold out' : 'Add to cart'}
         </button>
@@ -80,14 +79,11 @@ export function RareteeProductGrid() {
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
         <div className="flex items-baseline justify-between mb-12">
-          <h2
-            className="text-6xl uppercase text-foreground"
-            style={{ fontFamily: 'var(--font-bebas-neue)' }}
-          >
+          <h2 className="font-heading text-6xl uppercase text-foreground">
             Drop 001
           </h2>
           <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground font-sans">
-            6 pieces — 2 remaining
+            {PRODUCTS.length} pieces — {totalRemaining} remaining
           </p>
         </div>
 
