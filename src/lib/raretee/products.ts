@@ -14,3 +14,5 @@ export const PRODUCTS: Product[] = [
   { id: '001-E', name: 'REWIRE', edition: 'Drop 001 — E', price: 70, remaining: 0 },
   { id: '001-F', name: 'BLACKOUT', edition: 'Drop 001 — F', price: 75, remaining: 1 },
 ]
+
+export const totalRemaining = PRODUCTS.reduce((sum, p) => sum + p.remaining, 0)

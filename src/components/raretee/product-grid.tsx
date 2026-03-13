@@ -1,4 +1,4 @@
-import { type Product, PRODUCTS } from '@/lib/raretee/products'
+import { type Product, PRODUCTS, totalRemaining } from '@/lib/raretee/products'
 export type { Product }
 export { PRODUCTS }
 
@@ -39,7 +39,7 @@ function ProductCard({ product }: { product: Product }) {
             {product.name}
           </h3>
           <span className="text-sm text-foreground font-sans font-bold tabular-nums">
-            £{product.price}
+            {product.price.toLocaleString('en-GB', { style: 'currency', currency: 'GBP' })}
           </span>
         </div>
         <p className="text-xs text-muted-foreground tracking-widest uppercase font-sans">
@@ -60,8 +60,6 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export function RareteeProductGrid() {
-  const totalRemaining = PRODUCTS.reduce((sum, p) => sum + p.remaining, 0)
-
   return (
     <section id="drops" className="px-6 py-24 border-b border-border">
       <div className="max-w-5xl mx-auto">

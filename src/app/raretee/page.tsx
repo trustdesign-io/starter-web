@@ -2,15 +2,13 @@ import type { Metadata } from 'next'
 import { RareteeNav } from '@/components/raretee/nav'
 import { RareteeHero } from '@/components/raretee/hero'
 import { RareteeProductGrid } from '@/components/raretee/product-grid'
-import { PRODUCTS } from '@/lib/raretee/products'
+import { totalRemaining } from '@/lib/raretee/products'
 import { RareteeAbout } from '@/components/raretee/about'
 
 export const metadata: Metadata = {
   title: 'Raretee — Drop 001',
   description: 'Limited-run t-shirts. Rebellious by design.',
 }
-
-const totalRemaining = PRODUCTS.reduce((sum, p) => sum + p.remaining, 0)
 
 export default function RareteePage() {
   return (
