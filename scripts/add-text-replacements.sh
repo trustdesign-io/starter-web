@@ -25,6 +25,8 @@ declare -a ENTRIES=(
   '{ on = 1; replace = "take next"; with = "/take-task next"; }'
   '{ on = 1; replace = "review code"; with = "/review"; }'
   '{ on = 1; replace = "update ticket"; with = "/update-ticket "; }'
+  '{ on = 1; replace = "review pr"; with = "/review-pr "; }'
+  '{ on = 1; replace = "review pull request"; with = "/review-pr "; }'
 )
 
 for ENTRY in "${ENTRIES[@]}"; do
