@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { RareteeNav } from '@/components/raretee/nav'
 import { RareteeHero } from '@/components/raretee/hero'
-import { RareteeProductGrid } from '@/components/raretee/product-grid'
+import { RareteeProductGrid, PRODUCTS } from '@/components/raretee/product-grid'
 import { RareteeAbout } from '@/components/raretee/about'
 
 export const metadata: Metadata = {
@@ -9,8 +9,7 @@ export const metadata: Metadata = {
   description: 'Limited-run t-shirts. Rebellious by design.',
 }
 
-// Kept in sync with product-grid.tsx PRODUCTS data
-const DROP_001_REMAINING = 15
+const totalRemaining = PRODUCTS.reduce((sum, p) => sum + p.remaining, 0)
 
 export default function RareteePage() {
   return (
@@ -23,7 +22,7 @@ export default function RareteePage() {
       </a>
       <RareteeNav />
       <main>
-        <RareteeHero totalRemaining={DROP_001_REMAINING} />
+        <RareteeHero totalRemaining={totalRemaining} />
         <RareteeProductGrid />
         <RareteeAbout />
       </main>

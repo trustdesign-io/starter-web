@@ -6,7 +6,7 @@ interface Product {
   remaining: number
 }
 
-const PRODUCTS: Product[] = [
+export const PRODUCTS: Product[] = [
   { id: '001-A', name: 'DISSENT', edition: 'Drop 001 — A', price: 65, remaining: 4 },
   { id: '001-B', name: 'STATIC', edition: 'Drop 001 — B', price: 65, remaining: 0 },
   { id: '001-C', name: 'GHOST SIGNAL', edition: 'Drop 001 — C', price: 75, remaining: 2 },
@@ -61,6 +61,7 @@ function ProductCard({ product }: { product: Product }) {
         <button
           type="button"
           disabled={isSold}
+          aria-label={isSold ? `${product.name} — sold out` : `Add ${product.name} to cart`}
           className="mt-2 w-full bg-primary text-primary-foreground text-xs tracking-widest uppercase py-2.5 font-sans font-bold hover:bg-primary/90 disabled:bg-border disabled:text-muted-foreground disabled:cursor-not-allowed transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
         >
           {isSold ? 'Sold out' : 'Add to cart'}

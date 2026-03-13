@@ -5,11 +5,11 @@ export function RareteeNav() {
         Raretee
       </span>
       <div className="flex items-center gap-8 text-xs tracking-widest uppercase text-muted-foreground">
-        <a href="#drops" className="hover:text-primary transition-colors">Drops</a>
-        <a href="#about" className="hover:text-primary transition-colors">About</a>
+        <a href="#drops" className="hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">Drops</a>
+        <a href="#about" className="hover:text-primary transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">About</a>
         <a
           href="#drops"
-          className="border border-primary text-primary px-4 py-1.5 text-xs tracking-widest uppercase hover:bg-primary hover:text-primary-foreground transition-colors"
+          className="border border-primary text-primary px-4 py-1.5 text-xs tracking-widest uppercase hover:bg-primary hover:text-primary-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
         >
           Shop
         </a>
