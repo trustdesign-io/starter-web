@@ -8,57 +8,31 @@
   --font-sans: var(--font-quicksand), sans-serif;
   --font-heading: var(--font-caveat), cursive;
 
-  /* raretee — primary (magenta-purple) */
-  --color-raretee-primary-50:  #fdf5ff;
-  --color-raretee-primary-100: #fcecfe;
-  --color-raretee-primary-200: #f7cffd;
-  --color-raretee-primary-300: #f2b2fb;
-  --color-raretee-primary-400: #ec8cfa;
-  --color-raretee-primary-500: #df3ff6;
-  --color-raretee-primary-600: #be36d1;
-  --color-raretee-primary-700: #9c2cac;
-  --color-raretee-primary-800: #7b2387;
-  --color-raretee-primary-900: #591962;
-  --color-raretee-primary-950: #38103e;
+  /* raretee — acid green (CTA / primary) */
+  --color-raretee-acid-50:  #f7ffe0;
+  --color-raretee-acid-100: #edffc0;
+  --color-raretee-acid-200: #dbff82;
+  --color-raretee-acid-300: #c6ff00;
+  --color-raretee-acid-400: #aee000;
+  --color-raretee-acid-500: #94be00;
+  --color-raretee-acid-600: #729200;
+  --color-raretee-acid-700: #556c00;
+  --color-raretee-acid-800: #3a4a00;
+  --color-raretee-acid-900: #1e2600;
+  --color-raretee-acid-950: #0f1300;
 
-  /* raretee — secondary (cyber green, complementary) */
-  --color-raretee-secondary-50:  #f4fdf3;
-  --color-raretee-secondary-100: #e9fbe7;
-  --color-raretee-secondary-200: #c9f6c2;
-  --color-raretee-secondary-300: #a8f19d;
-  --color-raretee-secondary-400: #7de96c;
-  --color-raretee-secondary-500: #26db0a;
-  --color-raretee-secondary-600: #20ba09;
-  --color-raretee-secondary-700: #1b9907;
-  --color-raretee-secondary-800: #157806;
-  --color-raretee-secondary-900: #0f5804;
-  --color-raretee-secondary-950: #0a3703;
-
-  /* raretee — accent (electric lime, CTA) */
-  --color-raretee-accent-50:  #fbfff4;
-  --color-raretee-accent-100: #f6fee9;
-  --color-raretee-accent-200: #e9fdc8;
-  --color-raretee-accent-300: #dcfba7;
-  --color-raretee-accent-400: #cbf97c;
-  --color-raretee-accent-500: #a8f524;
-  --color-raretee-accent-600: #8fd01f;
-  --color-raretee-accent-700: #76ac19;
-  --color-raretee-accent-800: #5c8714;
-  --color-raretee-accent-900: #43620e;
-  --color-raretee-accent-950: #2a3d09;
-
-  /* raretee — success (green) */
-  --color-raretee-success-50:  #f3faf6;
-  --color-raretee-success-100: #e8f6ed;
-  --color-raretee-success-200: #c5e8d2;
-  --color-raretee-success-300: #a2dab7;
-  --color-raretee-success-400: #73c892;
-  --color-raretee-success-500: #16a34a;
-  --color-raretee-success-600: #138b3f;
-  --color-raretee-success-700: #0f7234;
-  --color-raretee-success-800: #0c5a29;
-  --color-raretee-success-900: #09411e;
-  --color-raretee-success-950: #062913;
+  /* raretee — secondary (muted off-white for type) */
+  --color-raretee-stone-50:  #fafaf8;
+  --color-raretee-stone-100: #f0f0ec;
+  --color-raretee-stone-200: #d4d4cc;
+  --color-raretee-stone-300: #b8b8b0;
+  --color-raretee-stone-400: #909088;
+  --color-raretee-stone-500: #686860;
+  --color-raretee-stone-600: #484840;
+  --color-raretee-stone-700: #303028;
+  --color-raretee-stone-800: #1e1e18;
+  --color-raretee-stone-900: #121210;
+  --color-raretee-stone-950: #0a0a08;
 
   /* raretee — destructive (red) */
   --color-raretee-destructive-50:  #fef6f6;
@@ -118,75 +92,43 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ── Raretee: near-black by default ─────────────────────────────────────── */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #df3ff6;
-  --primary-foreground: #fdf5ff;
-  --secondary: #26db0a;
-  --secondary-foreground: #f4fdf3;
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: #a8f524;
-  --accent-foreground: #fbfff4;
+  --background: #0a0a0a;
+  --foreground: #f0f0ec;
+  --card: #111110;
+  --card-foreground: #f0f0ec;
+  --popover: #111110;
+  --popover-foreground: #f0f0ec;
+  --primary: #c6ff00;           /* acid green — CTA / interactive */
+  --primary-foreground: #0a0a0a;
+  --secondary: #1e1e18;
+  --secondary-foreground: #f0f0ec;
+  --muted: #1e1e18;
+  --muted-foreground: #909088;
+  --accent: #c6ff00;
+  --accent-foreground: #0a0a0a;
   --destructive: #ef4444;
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: #df3ff6;
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --radius: 2px; /* punk/edgy — hard corners */
-  /* shadows: neon glow — box-shadow: 0 0 12px var(--primary), 0 0 24px var(--primary) */
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: #2a2a24;
+  --input: #1e1e18;
+  --ring: #c6ff00;
+  --chart-1: #c6ff00;
+  --chart-2: #f0f0ec;
+  --chart-3: #909088;
+  --chart-4: #484840;
+  --chart-5: #303028;
+  --radius: 0px;                /* zero radius — stark, confrontational */
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #f0f0ec;
+  --sidebar-primary: #c6ff00;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #1e1e18;
+  --sidebar-accent-foreground: #f0f0ec;
+  --sidebar-border: #2a2a24;
+  --sidebar-ring: #c6ff00;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
+/* Raretee is dark-by-default — no separate .dark overrides needed */
 
 @layer base {
   * {
