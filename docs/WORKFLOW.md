@@ -128,6 +128,35 @@ Claude will not open a PR with a failing lint, type-check, or build. Errors are 
 
 ---
 
+## Design skills
+
+This project has two Claude Code design skills installed. Use the right one for the task.
+
+### `ui-ux-pro-max` — default for all UI work
+
+Use this for day-to-day component and feature work. It provides a searchable library of 96 colour palettes, 57 font pairings, 67 named design styles, 25 chart types, and coverage for 13 frameworks including Vue/Nuxt.
+
+Invoke it with `/ui-ux-pro-max` or just describe design work — it activates automatically on UI tasks.
+
+### `bencium-controlled-ux-designer` — deeper specs and approval protocol
+
+Use this when you need:
+- The detailed accessibility reference (WCAG 2.1 AA, 17KB spec) when building complex accessible components
+- The full motion/animation spec (11KB) for precise timing and GPU rules
+- An explicit design approval protocol — Claude will ask before making any design decision rather than choosing unilaterally. Useful for client-facing work or when design consistency must be audited.
+
+Invoke explicitly: `/bencium-controlled-ux-designer` (not installed by default — see [research findings](./research/bencium-design-skill.md) for installation steps).
+
+### `bencium-innovative-ux-designer` — distinctive aesthetics
+
+Use this when a specific page (marketing, landing, campaign) needs a high-creativity push away from generic AI-defaults. Provides 11 named tone options and an explicit list of prohibited patterns (generic blue, glass morphism, Apple mimicry, etc.).
+
+Invoke explicitly: `/bencium-innovative-ux-designer` (not installed by default).
+
+> See [`docs/research/bencium-design-skill.md`](./research/bencium-design-skill.md) for the full comparison, limitations, and installation instructions.
+
+---
+
 ## Bot identity
 
 > **Required:** `$TRUSTDESIGN_BOT_TOKEN` must be set in your shell before slash commands can post as the bot. If it is not set, actions fall back to your own authenticated token.
