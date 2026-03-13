@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { RareteeNav } from '@/components/raretee/nav'
 import { RareteeHero } from '@/components/raretee/hero'
-import { RareteeProductGrid, PRODUCTS } from '@/components/raretee/product-grid'
+import { RareteeProductGrid } from '@/components/raretee/product-grid'
+import { PRODUCTS } from '@/lib/raretee/products'
 import { RareteeAbout } from '@/components/raretee/about'
 
 export const metadata: Metadata = {

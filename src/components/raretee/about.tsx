@@ -1,3 +1,5 @@
+import { PRODUCTS } from '@/lib/raretee/products'
+
 export function RareteeAbout() {
   return (
     <section id="about" className="px-6 py-24 border-b border-border">
@@ -38,7 +40,7 @@ export function RareteeAbout() {
             <div className="mt-4 grid grid-cols-3 gap-px bg-border">
               {[
                 { value: '001', label: 'Drops' },
-                { value: '6', label: 'Pieces' },
+                { value: String(PRODUCTS.length), label: 'Pieces' },
                 { value: '0', label: 'Restocks' },
               ].map(({ value, label }) => (
                 <div key={label} className="bg-background p-6 flex flex-col gap-1">
