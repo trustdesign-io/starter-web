@@ -1,11 +1,14 @@
 import type { Preview } from '@storybook/nextjs-vite'
 import '../src/app/globals.css'
 
-// Inject next/font CSS variables so font-heading and font-sans utilities resolve
-// correctly in Storybook (next/font normally sets these on <html> at runtime).
+// Inject next/font CSS variables so font utilities resolve correctly in Storybook.
+// next/font sets these on <html> at runtime via Next.js — Storybook bypasses that.
+// IMPORTANT: whenever a new font is added to src/app/layout.tsx, add its
+// CSS variable here too or it will appear as undefined in Storybook.
 if (typeof document !== 'undefined') {
   document.documentElement.style.setProperty('--font-bebas-neue', '"Bebas Neue"')
   document.documentElement.style.setProperty('--font-space-mono', '"Space Mono"')
+  document.documentElement.style.setProperty('--font-caveat', '"Caveat"')
 }
 
 const preview: Preview = {

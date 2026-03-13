@@ -90,7 +90,8 @@
       "Skill(commit-commands:commit)",
       "Bash(gh repo view --json nameWithOwner -q .nameWithOwner)",
       "Bash(gh issue create \\\\\n  --repo \"trustdesign-io/starter-web\" \\\\\n  --title \"Add Storybook section to HUMAN_GUIDE.md\" \\\\\n  --body \"\" 2>&1)",
-      "Bash(gh api graphql -f query='\n  query\\($org: String!, $number: Int!\\) {\n    organization\\(login: $org\\) {\n      projectV2\\(number: $number\\) {\n        fields\\(first: 20\\) {\n          nodes {\n            ... on ProjectV2SingleSelectField {\n              id\n              name\n              options { id name }\n            }\n          }\n        }\n      }\n    }\n  }\n' -F org=\"trustdesign-io\" -F number=3)"
+      "Bash(gh api graphql -f query='\n  query\\($org: String!, $number: Int!\\) {\n    organization\\(login: $org\\) {\n      projectV2\\(number: $number\\) {\n        fields\\(first: 20\\) {\n          nodes {\n            ... on ProjectV2SingleSelectField {\n              id\n              name\n              options { id name }\n            }\n          }\n        }\n      }\n    }\n  }\n' -F org=\"trustdesign-io\" -F number=3)",
+      "WebSearch"
     ]
   }
 }

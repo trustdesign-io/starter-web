@@ -161,6 +161,24 @@ Before any design work is considered complete, verify:
 
 ---
 
+## Adding new fonts
+
+Fonts are loaded via `next/font/google` in `src/app/layout.tsx`. Storybook
+does not run through the Next.js runtime so font CSS variables are undefined
+there by default.
+
+**Whenever a new font is added to `layout.tsx`, you must also add its CSS
+variable to the shim in `.storybook/preview.ts`:**
+
+```ts
+document.documentElement.style.setProperty('--font-your-font', '"Your Font"')
+```
+
+Failing to do this causes fonts to silently fall back to the system font in
+Storybook, making visual tests unreliable.
+
+---
+
 ## Auth flow
 
 Supabase handles authentication. The auth pages call `createClient()` from
