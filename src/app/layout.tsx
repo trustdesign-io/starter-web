@@ -1,18 +1,18 @@
 import type { Metadata } from 'next'
-import { Caveat, Quicksand } from 'next/font/google'
+import { Bebas_Neue, Space_Mono } from 'next/font/google'
 import './globals.css'
 
-const caveat = Caveat({ subsets: ['latin'], variable: '--font-caveat' })
-const quicksand = Quicksand({ subsets: ['latin'], variable: '--font-quicksand' })
+const bebasNeue = Bebas_Neue({ weight: '400', subsets: ['latin'], variable: '--font-bebas-neue' })
+const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space-mono' })
 
 export const metadata: Metadata = {
-  title: 'App',
-  description: 'Built with the Trustdesign starter',
+  title: 'Raretee',
+  description: 'Limited-run t-shirts. Rebellious by design.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${caveat.variable} ${quicksand.variable}`}>
+    <html lang="en" className={`${bebasNeue.variable} ${spaceMono.variable}`}>
       <body>{children}</body>
     </html>
   )
