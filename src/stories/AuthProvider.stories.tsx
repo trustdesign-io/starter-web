@@ -1,4 +1,4 @@
-import { vi, fn } from '@storybook/test'
+import { vi } from 'vitest'
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 
 import { AuthProvider } from '@/components/auth-provider'
@@ -9,8 +9,8 @@ import type { User } from '@/types'
 vi.mock('@/lib/supabase/client', () => ({
   createClient: () => ({
     auth: {
-      onAuthStateChange: fn().mockReturnValue({
-        data: { subscription: { unsubscribe: fn() } },
+      onAuthStateChange: vi.fn().mockReturnValue({
+        data: { subscription: { unsubscribe: vi.fn() } },
       }),
     },
   }),
