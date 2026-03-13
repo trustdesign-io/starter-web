@@ -117,10 +117,15 @@ gh api graphql -f query='
 If not found in project, add it:
 
 ```bash
-ITEM_ID=$(gh project item-add "$PROJECT_NUMBER" \
-  --owner "$ORG" \
-  --url "https://github.com/$REPO/issues/$ISSUE_NUMBER" \
-  --format json | python3 -c "import sys,json; print(json.load(sys.stdin)['id'])")
+CONTENT_ID=$(gh api repos/$REPO/issues/$ISSUE_NUMBER --jq .node_id)
+ITEM_ID=$(gh api graphql -f query='
+  mutation($projectId: ID!, $contentId: ID!) {
+    addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
+      item { id }
+    }
+  }
+' -F projectId="$PROJECT_ID" \
+  -F contentId="$CONTENT_ID" --jq '.data.addProjectV2ItemById.item.id')
 ```
 
 ---
