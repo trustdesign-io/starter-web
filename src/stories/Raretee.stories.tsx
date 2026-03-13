@@ -23,7 +23,7 @@ export const FullPage: Story = {
     <>
       <RareteeNav />
       <main>
-        <RareteeHero />
+        <RareteeHero totalRemaining={15} />
         <RareteeProductGrid />
         <RareteeAbout />
       </main>
@@ -36,7 +36,7 @@ export const Nav: Story = {
 }
 
 export const Hero: Story = {
-  render: () => <RareteeHero />,
+  render: () => <RareteeHero totalRemaining={15} />,
 }
 
 export const ProductGrid: Story = {

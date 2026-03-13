@@ -1,4 +1,8 @@
-export function RareteeHero() {
+interface RareteeHeroProps {
+  totalRemaining: number
+}
+
+export function RareteeHero({ totalRemaining }: RareteeHeroProps) {
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 pt-24 pb-16 border-b border-border">
       <div className="max-w-5xl mx-auto w-full">
@@ -30,14 +34,14 @@ export function RareteeHero() {
         <div className="flex flex-wrap items-center gap-4 mt-12">
           <a
             href="#drops"
-            className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-3 text-sm tracking-widest uppercase font-sans font-bold hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-3 text-sm tracking-widest uppercase font-sans font-bold hover:bg-primary/90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
           >
             View drop 001
             <span aria-hidden>→</span>
           </a>
           <a
             href="#about"
-            className="inline-flex items-center text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors font-sans"
+            className="inline-flex items-center text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors font-sans focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
           >
             What is Raretee?
           </a>
@@ -45,7 +49,7 @@ export function RareteeHero() {
 
         {/* Ticker */}
         <div className="mt-20 pt-8 border-t border-border flex items-center gap-12 text-xs tracking-[0.3em] uppercase text-muted-foreground">
-          <span>12 pieces remaining</span>
+          <span>{totalRemaining} pieces remaining</span>
           <span className="text-muted-foreground/40" aria-hidden>—</span>
           <span>Ships in 5–7 days</span>
           <span className="text-muted-foreground/40" aria-hidden>—</span>

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   description: 'Limited-run t-shirts. Rebellious by design.',
 }
 
+// Kept in sync with product-grid.tsx PRODUCTS data
+const DROP_001_REMAINING = 15
+
 export default function RareteePage() {
   return (
     <>
@@ -20,7 +23,7 @@ export default function RareteePage() {
       </a>
       <RareteeNav />
       <main>
-        <RareteeHero />
+        <RareteeHero totalRemaining={DROP_001_REMAINING} />
         <RareteeProductGrid />
         <RareteeAbout />
       </main>
