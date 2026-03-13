@@ -35,6 +35,8 @@ All workflow actions are available as slash commands inside Claude Code.
 | Command | What it does |
 |---------|-------------|
 | `/board` | Show open tickets for the current repo |
+| `/board all` | Show tickets from all repos |
+| `/board --all` | Show all repos including Done |
 | `/create-ticket <title> [category:X] [priority:X] [size:X]` | Create an issue and add it to the board |
 | `/update-ticket <number> [field:value ...]` | Update priority, size, category, status, title, or body |
 | `/move-ticket <number> <status>` | Move a ticket to a different status column |
@@ -50,10 +52,12 @@ All workflow actions are available as slash commands inside Claude Code.
 
 | Command | What it does |
 |---------|-------------|
-| `/take-task [next\|<number>]` | Pick up a ticket, implement it, open a PR, self-review, move to In Review |
+| `/take-task [next\|<number>\|<number> <number> ...]` | Pick up a ticket, implement it, open a PR, self-review, move to In Review |
 | `/review-pr <number>` | Run a self-review sub-agent on an existing PR and post findings as a comment |
 
 `/take-task next` picks the highest-priority **Todo** ticket for the current repo (Critical > High > Medium > Low; tiebreak: lowest number first). If no Todo tickets exist, it checks Backlog and asks before proceeding.
+
+Pass multiple numbers (`/take-task 7 8 9`) to queue several tickets — Claude completes one before starting the next.
 
 ---
 
@@ -70,7 +74,7 @@ Human                          Claude Code
   │                                ├─ Moves ticket to In Progress
   │                                ├─ Creates feature branch
   │                                ├─ Implements the change
-  │                                ├─ Runs: lint → type-check → build
+  │                                ├─ Runs: lint → type-check → unit tests → build
   │                                ├─ Commits and pushes
   │                                ├─ Opens PR
   │                                ├─ Self-review via sub-agent → posts comment
@@ -108,24 +112,27 @@ PRs always target `main`. Never push directly to `main`.
 
 ## CI
 
-Every PR runs `.github/workflows/ci.yml`, which gates merge on:
+Every PR (and every push to `main` or `staging`) runs `.github/workflows/ci.yml`, which gates merge on:
 
-1. `npm run lint`
-2. `npm run type-check`
-3. `npm run test` (Vitest unit tests)
-4. `npm run build`
+1. `npm ci` — install dependencies
+2. `npx playwright install --with-deps chromium` — install E2E browser
+3. `npx prisma generate` — generate Prisma client
+4. `npm run lint`
+5. `npm run type-check`
+6. `npm run test` — Vitest unit tests
+7. `npm run build`
 
-On merge to `main`, a second job runs `npx prisma migrate deploy` automatically.
+On **merge to `main` only**, a second job runs `npx prisma migrate deploy` automatically (after the `ci` job passes).
 
-Claude will not open a PR with a failing build. If lint or type-check fails after implementation, Claude fixes the errors before pushing.
+Claude will not open a PR with a failing lint, type-check, or build. Errors are fixed on the branch before pushing.
 
 ---
 
 ## Bot identity
 
-Tickets and PR comments from Claude appear under the **trustdesign-bot** GitHub account. The bot's personal access token is expected in `$TRUSTDESIGN_BOT_TOKEN`. If the variable is not set, actions fall back to the authenticated user's token.
+> **Required:** `$TRUSTDESIGN_BOT_TOKEN` must be set in your shell before slash commands can post as the bot. If it is not set, actions fall back to your own authenticated token.
 
-See `docs/BOT_SETUP.md` for how to configure the bot token.
+Tickets and PR comments from Claude appear under the **trustdesign-bot** GitHub account when the token is present. See `docs/BOT_SETUP.md` for setup instructions.
 
 ---
 
