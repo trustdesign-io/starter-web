@@ -16,14 +16,9 @@ const PRODUCTS: Product[] = [
   { id: '001-F', name: 'BLACKOUT', edition: 'Drop 001 — F', price: 75, remaining: 1, sold: false },
 ]
 
-const totalRemaining = PRODUCTS.filter((p) => !p.sold).reduce((sum, p) => sum + p.remaining, 0)
-
 function ProductCard({ product }: { product: Product }) {
   return (
-    <article
-      className="group flex flex-col border border-border hover:border-primary transition-colors"
-      aria-label={product.name}
-    >
+    <article className="group flex flex-col border border-border hover:border-primary transition-colors">
       {/* Image placeholder */}
       <div className="aspect-square bg-secondary flex items-center justify-center relative overflow-hidden">
         <span
@@ -74,6 +69,8 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export function RareteeProductGrid() {
+  const totalRemaining = PRODUCTS.filter((p) => !p.sold).reduce((sum, p) => sum + p.remaining, 0)
+
   return (
     <section id="drops" className="px-6 py-24 border-b border-border">
       <div className="max-w-5xl mx-auto">

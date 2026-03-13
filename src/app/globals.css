@@ -141,39 +141,7 @@
   --sidebar-ring: #c6ff00;
 }
 
-.dark {
-  --background: #0a0a0a;
-  --foreground: #f0f0ec;
-  --card: #111110;
-  --card-foreground: #f0f0ec;
-  --popover: #111110;
-  --popover-foreground: #f0f0ec;
-  --primary: #c6ff00;
-  --primary-foreground: #0a0a0a;
-  --secondary: #1e1e18;
-  --secondary-foreground: #f0f0ec;
-  --muted: #1e1e18;
-  --muted-foreground: #909088;
-  --accent: #c6ff00;
-  --accent-foreground: #0a0a0a;
-  --destructive: #ef4444;
-  --border: #2a2a24;
-  --input: #1e1e18;
-  --ring: #c6ff00;
-  --chart-1: #c6ff00;
-  --chart-2: #f0f0ec;
-  --chart-3: #909088;
-  --chart-4: #484840;
-  --chart-5: #303028;
-  --sidebar: #0a0a0a;
-  --sidebar-foreground: #f0f0ec;
-  --sidebar-primary: #c6ff00;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: #1e1e18;
-  --sidebar-accent-foreground: #f0f0ec;
-  --sidebar-border: #2a2a24;
-  --sidebar-ring: #c6ff00;
-}
+/* Raretee is dark-by-default — no separate .dark overrides needed */
 
 @layer base {
   * {

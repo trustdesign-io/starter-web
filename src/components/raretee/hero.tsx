@@ -46,9 +46,9 @@ export function RareteeHero() {
         {/* Ticker */}
         <div className="mt-20 pt-8 border-t border-border flex items-center gap-12 text-xs tracking-[0.3em] uppercase text-muted-foreground">
           <span>12 pieces remaining</span>
-          <span className="text-border">—</span>
+          <span className="text-muted-foreground/40" aria-hidden>—</span>
           <span>Ships in 5–7 days</span>
-          <span className="text-border">—</span>
+          <span className="text-muted-foreground/40" aria-hidden>—</span>
           <span>No restock</span>
         </div>
       </div>
