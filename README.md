@@ -33,10 +33,11 @@ cp .env.example .env.local
 
 Fill in the values in `.env.local`. See `docs/SETUP.md` for full instructions on Supabase, Google OAuth, and first-login behaviour.
 
-### 3. Run database migrations
+### 3. Run database migrations and generate the Prisma client
 
 ```bash
 npx prisma migrate dev
+npx prisma generate
 ```
 
 ### 4. Start the dev server
@@ -55,8 +56,10 @@ npm run build        # Production build
 npm run test         # Vitest unit tests
 npm run test:e2e     # Playwright E2E tests
 npm run lint         # ESLint check
+npm run type-check   # TypeScript type check
 npx prisma studio    # Browse the database
 npx prisma migrate dev  # Run pending migrations
+npx prisma generate  # Regenerate Prisma client after schema changes
 ```
 
 ## Project Structure
@@ -74,6 +77,19 @@ prisma/
 ├── schema.prisma     # Database schema
 └── migrations/       # Auto-generated migration files
 ```
+
+## Environment Variables
+
+| Variable | Purpose |
+|----------|---------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL (public) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key (public) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server only) |
+| `DATABASE_URL` | Supabase direct Postgres connection string |
+| `DIRECT_URL` | Supabase direct connection (used by Prisma for migrations) |
+| `NEXT_PUBLIC_SITE_URL` | Public base URL of the app (e.g. `http://localhost:3000`) |
+
+> Use the direct connection string (`db.[ref].supabase.co:5432`) for both `DATABASE_URL` and `DIRECT_URL` — not the pooler. See `docs/SETUP.md` for details.
 
 ## Documentation
 
