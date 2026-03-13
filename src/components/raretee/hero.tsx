@@ -34,14 +34,14 @@ export function RareteeHero({ totalRemaining }: RareteeHeroProps) {
         <div className="flex flex-wrap items-center gap-4 mt-12">
           <a
             href="#drops"
-            className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-3 text-sm tracking-widest uppercase font-sans font-bold hover:bg-primary/90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+            className="cursor-pointer inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-3 text-sm tracking-widest uppercase font-sans font-bold hover:bg-primary/90 active:bg-primary/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
           >
             View drop 001
             <span aria-hidden>→</span>
           </a>
           <a
             href="#about"
-            className="inline-flex items-center text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors font-sans focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+            className="cursor-pointer inline-flex items-center text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground active:text-foreground/70 transition-colors font-sans focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
           >
             What is Raretee?
           </a>
