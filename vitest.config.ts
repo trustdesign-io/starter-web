@@ -9,7 +9,6 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  // @ts-expect-error — Vite 8 (added by Storybook) and Vitest's bundled Vite have incompatible Plugin types
   plugins: [react()],
   test: {
     environment: 'jsdom',
