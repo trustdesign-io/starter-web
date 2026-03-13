@@ -8,7 +8,6 @@ import '../src/app/globals.css'
 if (typeof document !== 'undefined') {
   document.documentElement.style.setProperty('--font-bebas-neue', '"Bebas Neue"')
   document.documentElement.style.setProperty('--font-space-mono', '"Space Mono"')
-  document.documentElement.style.setProperty('--font-caveat', '"Caveat"')
 }
 
 const preview: Preview = {
