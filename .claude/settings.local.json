@@ -72,7 +72,25 @@
       "Bash(for f in checkbox radio-group switch slider toggle toggle-group textarea select native-select input-otp input-group field)",
       "Read(//Users/dannychambers/Projects/trustdesign/starter-web/src/components/ui/**)",
       "Bash(npm run lint 2>&1 | grep \"error\\\\|warning\" | grep -v \"warning.*no-img\" | head -10 && npm run type-check 2>&1 | grep \"error TS\" | head -10)",
-      "Bash(npm run type-check 2>&1 | grep \"error TS\" && echo \"CLEAN\" || true && npm run lint 2>&1 | grep \"^/\" | head -5)"
+      "Bash(npm run type-check 2>&1 | grep \"error TS\" && echo \"CLEAN\" || true && npm run lint 2>&1 | grep \"^/\" | head -5)",
+      "Read(//Users/dannychambers/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.1/**)",
+      "Bash(bash scripts/start-server.sh --project-dir /Users/dannychambers/Projects/trustdesign/starter-web)",
+      "Bash(find /Users/dannychambers/.claude/plugins -name \"*ui-ux*\" 2>/dev/null | head -20)",
+      "Bash(find /Users/dannychambers/.claude/plugins/cache/claude-plugins-official -name \"*ui-ux*\" 2>/dev/null; find /Users/dannychambers/.claude -name \"*ui-ux*\" 2>/dev/null | head -20)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"B2B SaaS agency platform professional dashboard\" --design-system --persist -p \"Agency Platform\" --stack shadcn -f markdown 2>&1)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"B2B SaaS agency platform dashboard\" --stack shadcn 2>&1)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"forms validation\" --stack shadcn 2>&1)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"theming tokens dark mode\" --stack shadcn 2>&1)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"data table sidebar navigation\" --stack shadcn 2>&1)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \"dialog modal sheet toast\" --stack shadcn 2>&1)",
+      "Bash(git mv docs/BRAND.md docs/BRAND_GUIDE.md)",
+      "Bash(python3 .claude/skills/ui-ux-pro-max/scripts/search.py \\\\\n  \"lifestyle punk t-shirts rebellion cyber\" \\\\\n  --design-system \\\\\n  --persist \\\\\n  --stack shadcn \\\\\n  -p \"raretee\" \\\\\n  -f markdown 2>&1)",
+      "Bash(npm run lint -- --max-warnings=0 2>&1 | tail -20)",
+      "Bash(npm run lint -- --max-warnings=0 2>&1 | tail -10)",
+      "Skill(commit-commands:commit)",
+      "Bash(gh repo view --json nameWithOwner -q .nameWithOwner)",
+      "Bash(gh issue create \\\\\n  --repo \"trustdesign-io/starter-web\" \\\\\n  --title \"Add Storybook section to HUMAN_GUIDE.md\" \\\\\n  --body \"\" 2>&1)",
+      "Bash(gh api graphql -f query='\n  query\\($org: String!, $number: Int!\\) {\n    organization\\(login: $org\\) {\n      projectV2\\(number: $number\\) {\n        fields\\(first: 20\\) {\n          nodes {\n            ... on ProjectV2SingleSelectField {\n              id\n              name\n              options { id name }\n            }\n          }\n        }\n      }\n    }\n  }\n' -F org=\"trustdesign-io\" -F number=3)"
     ]
   }
 }
