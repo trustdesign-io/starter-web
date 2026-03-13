@@ -17,9 +17,10 @@ export const PRODUCTS: Product[] = [
 
 function ProductCard({ product }: { product: Product }) {
   const isSold = product.remaining === 0
+  const headingId = `product-name-${product.id}`
 
   return (
-    <article className="group flex flex-col border border-border hover:border-primary transition-colors">
+    <article aria-labelledby={headingId} className="group flex flex-col border border-border hover:border-primary transition-colors">
       {/* Image placeholder */}
       <div className="aspect-square bg-secondary flex items-center justify-center relative overflow-hidden">
         <span
@@ -47,7 +48,7 @@ function ProductCard({ product }: { product: Product }) {
       {/* Info */}
       <div className="p-4 flex flex-col gap-2 border-t border-border">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-heading text-2xl leading-none uppercase text-foreground">
+          <h3 id={headingId} className="font-heading text-2xl leading-none uppercase text-foreground">
             {product.name}
           </h3>
           <span className="text-sm text-foreground font-sans font-bold tabular-nums">
