@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import rawCss from '../app/globals.css?raw'
 
 const meta: Meta = {
   title: 'Brand/Tokens',
@@ -16,49 +16,22 @@ type Story = StoryObj
 
 type Swatch = { shade: string; value: string }
 
-function useColorPalettes(): Map<string, Swatch[]> {
-  const [palettes, setPalettes] = useState<Map<string, Swatch[]>>(new Map())
+function parseColorPalettes(): Map<string, Swatch[]> {
+  const tokenMap = new Map<string, Swatch[]>()
+  const pattern = /--color-(.+?)-(\d+)\s*:\s*(#[0-9a-fA-F]{3,8})/g
 
-  useEffect(() => {
-    const tokenMap = new Map<string, Swatch[]>()
-    const pattern = /^--color-(.+)-(\d+)$/
+  let match: RegExpExecArray | null
+  while ((match = pattern.exec(rawCss)) !== null) {
+    const [, scale, shade, value] = match
+    if (!tokenMap.has(scale)) tokenMap.set(scale, [])
+    tokenMap.get(scale)!.push({ shade, value })
+  }
 
-    Array.from(document.styleSheets).forEach(sheet => {
-      let rules: CSSRuleList
-      try {
-        rules = sheet.cssRules
-      } catch {
-        return // cross-origin sheet — skip
-      }
-      Array.from(rules).forEach(rule => {
-        if (rule.type !== 1) return // only CSSStyleRule
-        const styleRule = rule as CSSStyleRule
-        for (let i = 0; i < styleRule.style.length; i++) {
-          const prop = styleRule.style[i]
-          const match = prop.match(pattern)
-          if (!match) continue
-          const [, scale, shade] = match
-          const value = styleRule.style.getPropertyValue(prop).trim()
-          if (!tokenMap.has(scale)) tokenMap.set(scale, [])
-          tokenMap.get(scale)!.push({ shade, value })
-        }
-      })
-    })
-
-    tokenMap.forEach(shades => shades.sort((a, b) => Number(a.shade) - Number(b.shade)))
-    setPalettes(new Map([...tokenMap].sort(([a], [b]) => a.localeCompare(b))))
-  }, [])
-
-  return palettes
+  tokenMap.forEach(shades => shades.sort((a, b) => Number(a.shade) - Number(b.shade)))
+  return new Map([...tokenMap].sort(([a], [b]) => a.localeCompare(b)))
 }
 
-function isLightColor(hex: string): boolean {
-  if (!hex.startsWith('#') || hex.length < 7) return true
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.5
-}
+const COLOR_PALETTES = parseColorPalettes()
 
 // ─── Colour components ───────────────────────────────────────────────────────
 
@@ -67,19 +40,16 @@ function SwatchRow({ scale, swatches }: { scale: string; swatches: Swatch[] }) {
     <div className="flex flex-col gap-2">
       <h3 className="text-sm font-semibold capitalize">{scale.replace(/-/g, ' ')}</h3>
       <div className="flex flex-wrap gap-3">
-        {swatches.map(({ shade, value }) => {
-          const textColor = isLightColor(value) ? '#111' : '#fff'
-          return (
-            <div key={shade} className="flex flex-col gap-1 w-20">
-              <div
-                className="h-12 w-full rounded-lg border border-border"
-                style={{ background: value }}
-              />
-              <p className="text-xs font-medium leading-tight">{shade}</p>
-              <p className="text-[10px] text-muted-foreground font-mono truncate">{value}</p>
-            </div>
-          )
-        })}
+        {swatches.map(({ shade, value }) => (
+          <div key={shade} className="flex flex-col gap-1 w-20">
+            <div
+              className="h-12 w-full rounded-lg border border-border"
+              style={{ background: value }}
+            />
+            <p className="text-xs font-medium leading-tight">{shade}</p>
+            <p className="text-[10px] text-muted-foreground font-mono truncate">{value}</p>
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -137,30 +107,22 @@ const TYPE_SCALE = [
 
 export const AllColourPalettes: Story = {
   name: 'Colour — All Palettes',
-  render: () => {
-    const palettes = useColorPalettes()
-
-    if (palettes.size === 0) {
-      return <p className="text-sm text-muted-foreground">Loading colour tokens…</p>
-    }
-
-    return (
-      <div className="flex flex-col gap-10">
-        <div>
-          <h2 className="text-base font-semibold mb-1">Colour palettes</h2>
-          <p className="text-sm text-muted-foreground mb-6">
-            All <code className="font-mono text-xs">--color-*</code> scales discovered from globals.css.
-            Scales are grouped and sorted automatically — no hardcoding required.
-          </p>
-          <div className="flex flex-col gap-8">
-            {Array.from(palettes.entries()).map(([scale, swatches]) => (
-              <SwatchRow key={scale} scale={scale} swatches={swatches} />
-            ))}
-          </div>
+  render: () => (
+    <div className="flex flex-col gap-10">
+      <div>
+        <h2 className="text-base font-semibold mb-1">Colour palettes</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          All <code className="font-mono text-xs">--color-*</code> scales parsed from globals.css.
+          Scales are grouped and sorted automatically — no hardcoding required.
+        </p>
+        <div className="flex flex-col gap-8">
+          {Array.from(COLOR_PALETTES.entries()).map(([scale, swatches]) => (
+            <SwatchRow key={scale} scale={scale} swatches={swatches} />
+          ))}
         </div>
       </div>
-    )
-  },
+    </div>
+  ),
 }
 
 export const SemanticColors: Story = {
