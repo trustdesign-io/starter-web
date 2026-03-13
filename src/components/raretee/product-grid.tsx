@@ -7,7 +7,7 @@ function ProductCard({ product }: { product: Product }) {
   const headingId = `product-name-${product.id}`
 
   return (
-    <article aria-labelledby={headingId} className="group flex flex-col border border-border hover:border-primary transition-colors">
+    <article aria-labelledby={headingId} className="group cursor-default flex flex-col border border-border hover:border-primary transition-colors">
       {/* Image placeholder */}
       <div className="aspect-square bg-secondary flex items-center justify-center relative overflow-hidden">
         <span
@@ -50,7 +50,7 @@ function ProductCard({ product }: { product: Product }) {
           type="button"
           disabled={isSold}
           aria-label={isSold ? `${product.name} — sold out` : `Add ${product.name} to cart`}
-          className="mt-2 w-full bg-primary text-primary-foreground text-xs tracking-widest uppercase py-2.5 font-sans font-bold hover:bg-primary/90 disabled:bg-border disabled:text-muted-foreground disabled:cursor-not-allowed transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+          className="mt-2 w-full cursor-pointer bg-primary text-primary-foreground text-xs tracking-widest uppercase py-2.5 font-sans font-bold hover:bg-primary/90 active:bg-primary/80 disabled:bg-border disabled:text-muted-foreground disabled:cursor-not-allowed transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
         >
           {isSold ? 'Sold out' : 'Add to cart'}
         </button>
