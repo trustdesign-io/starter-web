@@ -23,7 +23,6 @@ interface HeaderProps {
 }
 
 const DEFAULT_NAV_LINKS: NavLink[] = [
-  { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
 ]
 
@@ -37,12 +36,17 @@ export function Header({
 
   const closeMobile = useCallback(() => setMobileOpen(false), [])
 
+  // Close on Escape key
   useEffect(() => {
     if (!mobileOpen) return
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') closeMobile() }
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
   }, [mobileOpen, closeMobile])
+
+  // Close when navigating to a new route
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { closeMobile() }, [pathname, closeMobile])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -73,10 +77,10 @@ export function Header({
         <div className="hidden md:flex items-center gap-2">
           {!hideAuth && (
             <>
-              <Link href="/sign-in" className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+              <Link href="/sign-in" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
                 Sign in
               </Link>
-              <Link href="/sign-up" className={cn(buttonVariants({ size: 'sm' }))}>
+              <Link href="/sign-up" className={buttonVariants({ size: 'sm' })}>
                 Sign up
               </Link>
             </>
@@ -96,21 +100,21 @@ export function Header({
         </button>
       </div>
 
-      {/* Mobile nav overlay */}
+      {/* Mobile nav panel — aria-hidden when closed so AT skips contents */}
       <div
         id="mobile-nav"
+        aria-hidden={!mobileOpen}
         className={cn(
           'md:hidden border-t border-border bg-background overflow-hidden transition-all duration-200',
           mobileOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none',
         )}
       >
-        <nav className="flex flex-col px-4 py-4 gap-1">
+        <nav aria-label="Mobile navigation" className="flex flex-col px-4 py-4 gap-1">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={pathname === link.href ? 'page' : undefined}
-              onClick={closeMobile}
               className={cn(
                 'flex items-center h-10 rounded-md px-3 text-sm transition-colors duration-200',
                 pathname === link.href
@@ -126,14 +130,12 @@ export function Header({
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border">
               <Link
                 href="/sign-in"
-                onClick={closeMobile}
                 className={cn(buttonVariants({ variant: 'outline' }), 'w-full justify-center')}
               >
                 Sign in
               </Link>
               <Link
                 href="/sign-up"
-                onClick={closeMobile}
                 className={cn(buttonVariants(), 'w-full justify-center')}
               >
                 Sign up

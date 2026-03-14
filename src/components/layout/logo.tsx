@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-/** Shared default brand name — keep in sync with footer.tsx. Replace per project. */
+/** Shared default brand name — imported by footer.tsx. Replace per project. */
 export const DEFAULT_BRAND_NAME = 'YourBrand'
 
 interface LogoProps {
@@ -17,7 +17,6 @@ export function Logo({ className, href = '/', name = DEFAULT_BRAND_NAME }: LogoP
     <Link
       href={href}
       className={cn('flex items-center gap-2 font-semibold text-foreground hover:opacity-80 transition-opacity duration-200', className)}
-      aria-label={`${name} home`}
     >
       {/* Replace this SVG with your project logo mark */}
       <svg

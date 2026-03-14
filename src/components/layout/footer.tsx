@@ -1,3 +1,6 @@
+'use client'
+
+import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Logo, DEFAULT_BRAND_NAME } from './logo'
@@ -11,7 +14,7 @@ export interface SocialLink {
   label: string
   href: string
   /** Inline SVG path data for the icon */
-  icon: React.ReactNode
+  icon: ReactNode
 }
 
 interface FooterProps {
