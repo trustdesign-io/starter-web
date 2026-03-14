@@ -12,13 +12,13 @@ coherently rather than in isolation.
 This is a Next.js app with two distinct route groups:
 
 ### Public / marketing (`/`)
-- `/` — landing page (currently: default Next.js placeholder, or brand-specific page)
-- Any brand landing pages live here (e.g. `/raretee`)
+- `/` — landing page (currently: default Next.js placeholder)
 
-### Auth (`/sign-in`, `/sign-up`)
+### Auth (`/sign-in`, `/sign-up`, `/forgot-password`)
 - `/sign-in` — sign in with email/password via Supabase
 - `/sign-up` — register with email/password via Supabase
-- Both pages must reflect the brand palette and feel consistent with the
+- `/forgot-password` — password/username recovery via Supabase
+- All three pages must reflect the brand palette and feel consistent with the
   landing page. They are NOT generic — they are part of the brand experience.
 - Forms use shadcn `Input`, `Label`, `Button`, and `Field` components.
 
@@ -55,11 +55,11 @@ all authenticated pages. Designing only the landing page is incomplete.**
 | `/` | `src/app/page.tsx` | Public landing page |
 | `/sign-in` | `src/app/(auth)/sign-in/page.tsx` | Auth — Supabase email/password |
 | `/sign-up` | `src/app/(auth)/sign-up/page.tsx` | Auth — Supabase email/password |
+| `/forgot-password` | `src/app/(auth)/forgot-password/page.tsx` | Auth — Supabase password reset |
 | `/dashboard` | `src/app/(app)/dashboard/page.tsx` | Protected app shell |
 | `/settings` | `src/app/(app)/settings/page.tsx` | Protected app shell |
 
-Brand-specific landing pages go in `src/app/{brand}/page.tsx` with components
-in `src/components/{brand}/`.
+Brand-specific components go in `src/components/{brand}/`.
 
 ---
 
@@ -167,15 +167,23 @@ Fonts are loaded via `next/font/google` in `src/app/layout.tsx`. Storybook
 does not run through the Next.js runtime so font CSS variables are undefined
 there by default.
 
-**Whenever a new font is added to `layout.tsx`, you must also add its CSS
-variable to the shim in `.storybook/preview.ts`:**
+**Whenever a new font is added to `layout.tsx`, you must do two things:**
 
+1. Add the CSS variable shim to `.storybook/preview.ts`:
 ```ts
 document.documentElement.style.setProperty('--font-your-font', '"Your Font"')
 ```
 
-Failing to do this causes fonts to silently fall back to the system font in
-Storybook, making visual tests unreliable.
+2. Add the Google Fonts `@import` to `.storybook/preview-head.html`:
+```html
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Your+Font&display=swap');
+</style>
+```
+
+Both steps are required. The variable shim tells CSS what font name to use;
+the `@import` actually loads the font file. Missing either causes fonts to
+fall back to the system font in Storybook.
 
 ---
 

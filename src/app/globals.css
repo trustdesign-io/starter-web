@@ -5,54 +5,15 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-space-mono), monospace;
-  --font-heading: var(--font-bebas-neue), sans-serif;
-
-  /* raretee — acid green (CTA / primary) */
-  --color-raretee-acid-50:  #f7ffe0;
-  --color-raretee-acid-100: #edffc0;
-  --color-raretee-acid-200: #dbff82;
-  --color-raretee-acid-300: #c6ff00;
-  --color-raretee-acid-400: #aee000;
-  --color-raretee-acid-500: #94be00;
-  --color-raretee-acid-600: #729200;
-  --color-raretee-acid-700: #556c00;
-  --color-raretee-acid-800: #3a4a00;
-  --color-raretee-acid-900: #1e2600;
-  --color-raretee-acid-950: #0f1300;
-
-  /* raretee — secondary (muted off-white for type) */
-  --color-raretee-stone-50:  #fafaf8;
-  --color-raretee-stone-100: #f0f0ec;
-  --color-raretee-stone-200: #d4d4cc;
-  --color-raretee-stone-300: #b8b8b0;
-  --color-raretee-stone-400: #909088;
-  --color-raretee-stone-500: #686860;
-  --color-raretee-stone-600: #484840;
-  --color-raretee-stone-700: #303028;
-  --color-raretee-stone-800: #1e1e18;
-  --color-raretee-stone-900: #121210;
-  --color-raretee-stone-950: #0a0a08;
-
-  /* raretee — destructive (red) */
-  --color-raretee-destructive-50:  #fef6f6;
-  --color-raretee-destructive-100: #fdecec;
-  --color-raretee-destructive-200: #fbd0d0;
-  --color-raretee-destructive-300: #f9b4b4;
-  --color-raretee-destructive-400: #f58f8f;
-  --color-raretee-destructive-500: #ef4444;
-  --color-raretee-destructive-600: #cb3a3a;
-  --color-raretee-destructive-700: #a73030;
-  --color-raretee-destructive-800: #832525;
-  --color-raretee-destructive-900: #601b1b;
-  --color-raretee-destructive-950: #3c1111;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-heading: var(--font-geist-sans), system-ui, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-space-mono), monospace;
-  --font-heading: var(--font-bebas-neue), sans-serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-heading: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -92,43 +53,76 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ── Raretee: near-black by default ─────────────────────────────────────── */
+/* ── Default light theme (shadcn/ui neutral) ───────────────────────────── */
 :root {
-  --background: #0a0a0a;
-  --foreground: #f0f0ec;
-  --card: #111110;
-  --card-foreground: #f0f0ec;
-  --popover: #111110;
-  --popover-foreground: #f0f0ec;
-  --primary: #c6ff00;           /* acid green — CTA / interactive */
-  --primary-foreground: #0a0a0a;
-  --secondary: #1e1e18;
-  --secondary-foreground: #f0f0ec;
-  --muted: #1e1e18;
-  --muted-foreground: #909088;
-  --accent: #c6ff00;
-  --accent-foreground: #0a0a0a;
+  --background: #ffffff;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
   --destructive: #ef4444;
-  --border: #2a2a24;
-  --input: #1e1e18;
-  --ring: #c6ff00;
-  --chart-1: #c6ff00;
-  --chart-2: #f0f0ec;
-  --chart-3: #909088;
-  --chart-4: #484840;
-  --chart-5: #303028;
-  --radius: 0px;                /* zero radius — stark, confrontational */
-  --sidebar: #0a0a0a;
-  --sidebar-foreground: #f0f0ec;
-  --sidebar-primary: #c6ff00;
-  --sidebar-primary-foreground: #0a0a0a;
-  --sidebar-accent: #1e1e18;
-  --sidebar-accent-foreground: #f0f0ec;
-  --sidebar-border: #2a2a24;
-  --sidebar-ring: #c6ff00;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #18181b;
+  --chart-1: #e76e50;
+  --chart-2: #2a9d90;
+  --chart-3: #274754;
+  --chart-4: #e8c468;
+  --chart-5: #f4a462;
+  --radius: 0.625rem;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #09090b;
+  --sidebar-primary: #18181b;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #18181b;
 }
 
-/* Raretee is dark-by-default — no separate .dark overrides needed */
+/* ── Dark theme ────────────────────────────────────────────────────────── */
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #09090b;
+  --card-foreground: #fafafa;
+  --popover: #09090b;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #d4d4d8;
+  --chart-1: #3b82f6;
+  --chart-2: #10b981;
+  --chart-3: #f59e0b;
+  --chart-4: #a855f7;
+  --chart-5: #ef4444;
+  --sidebar: #09090b;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #fafafa;
+  --sidebar-primary-foreground: #18181b;
+  --sidebar-accent: #27272a;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #27272a;
+  --sidebar-ring: #d4d4d8;
+}
 
 @layer base {
   * {
