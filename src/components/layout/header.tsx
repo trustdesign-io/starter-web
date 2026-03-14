@@ -32,9 +32,13 @@ export function Header({
   hideAuth = false,
 }: HeaderProps) {
   const pathname = usePathname()
-  const [mobileOpen, setMobileOpen] = useState(false)
 
-  const closeMobile = useCallback(() => setMobileOpen(false), [])
+  // Store the pathname at which the menu was opened.
+  // Deriving isOpen from this means navigation auto-closes the menu without setState-in-effect.
+  const [openedAtPathname, setOpenedAtPathname] = useState<string | null>(null)
+  const mobileOpen = openedAtPathname === pathname
+
+  const closeMobile = useCallback(() => setOpenedAtPathname(null), [])
 
   // Close on Escape key
   useEffect(() => {
@@ -43,10 +47,6 @@ export function Header({
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
   }, [mobileOpen, closeMobile])
-
-  // Close when navigating to a new route
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { closeMobile() }, [pathname, closeMobile])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -93,7 +93,7 @@ export function Header({
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
-          onClick={() => setMobileOpen((v) => !v)}
+          onClick={() => setOpenedAtPathname((v) => v === null ? pathname : null)}
           className="md:hidden flex items-center justify-center h-9 w-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200 cursor-pointer"
         >
           {mobileOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
@@ -114,6 +114,7 @@ export function Header({
             <Link
               key={link.href}
               href={link.href}
+              tabIndex={mobileOpen ? undefined : -1}
               aria-current={pathname === link.href ? 'page' : undefined}
               className={cn(
                 'flex items-center h-10 rounded-md px-3 text-sm transition-colors duration-200',
@@ -130,12 +131,14 @@ export function Header({
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border">
               <Link
                 href="/sign-in"
+                tabIndex={mobileOpen ? undefined : -1}
                 className={cn(buttonVariants({ variant: 'outline' }), 'w-full justify-center')}
               >
                 Sign in
               </Link>
               <Link
                 href="/sign-up"
+                tabIndex={mobileOpen ? undefined : -1}
                 className={cn(buttonVariants(), 'w-full justify-center')}
               >
                 Sign up
