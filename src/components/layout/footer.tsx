@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { Logo } from './logo'
+import { Logo, DEFAULT_BRAND_NAME } from './logo'
 
 export interface FooterNavColumn {
   heading: string
@@ -90,12 +90,12 @@ export function Footer({
           {/* Nav columns */}
           {navColumns.map((col) => (
             <div key={col.heading} className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-wider text-foreground">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
                 {col.heading}
-              </p>
+              </h3>
               <ul className="flex flex-col gap-2">
                 {col.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={`${col.heading}:${link.href}`}>
                     <Link
                       href={link.href}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
@@ -112,7 +112,7 @@ export function Footer({
         {/* Bottom row: copyright */}
         <div className="mt-10 pt-6 border-t border-border flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
-            &copy; {year} {siteName ?? 'YourBrand'}. All rights reserved.
+            &copy; {year} {siteName ?? DEFAULT_BRAND_NAME}. All rights reserved.
           </p>
         </div>
       </div>

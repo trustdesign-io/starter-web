@@ -1,6 +1,9 @@
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
+/** Shared default brand name — keep in sync with footer.tsx. Replace per project. */
+export const DEFAULT_BRAND_NAME = 'YourBrand'
+
 interface LogoProps {
   className?: string
   href?: string
@@ -9,7 +12,7 @@ interface LogoProps {
 }
 
 /** Placeholder logo — replace the SVG mark and name per project. */
-export function Logo({ className, href = '/', name = 'YourBrand' }: LogoProps) {
+export function Logo({ className, href = '/', name = DEFAULT_BRAND_NAME }: LogoProps) {
   return (
     <Link
       href={href}

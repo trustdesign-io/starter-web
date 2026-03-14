@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MenuIcon, XIcon } from 'lucide-react'
@@ -34,6 +34,15 @@ export function Header({
 }: HeaderProps) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const closeMobile = useCallback(() => setMobileOpen(false), [])
+
+  useEffect(() => {
+    if (!mobileOpen) return
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') closeMobile() }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [mobileOpen, closeMobile])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -90,9 +99,6 @@ export function Header({
       {/* Mobile nav overlay */}
       <div
         id="mobile-nav"
-        role="dialog"
-        aria-label="Mobile navigation"
-        aria-modal="true"
         className={cn(
           'md:hidden border-t border-border bg-background overflow-hidden transition-all duration-200',
           mobileOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none',
@@ -104,7 +110,7 @@ export function Header({
               key={link.href}
               href={link.href}
               aria-current={pathname === link.href ? 'page' : undefined}
-              onClick={() => setMobileOpen(false)}
+              onClick={closeMobile}
               className={cn(
                 'flex items-center h-10 rounded-md px-3 text-sm transition-colors duration-200',
                 pathname === link.href
@@ -120,14 +126,14 @@ export function Header({
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border">
               <Link
                 href="/sign-in"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeMobile}
                 className={cn(buttonVariants({ variant: 'outline' }), 'w-full justify-center')}
               >
                 Sign in
               </Link>
               <Link
                 href="/sign-up"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeMobile}
                 className={cn(buttonVariants(), 'w-full justify-center')}
               >
                 Sign up
